@@ -435,10 +435,33 @@ details.v6-fold[open] summary:after{content:"−"}
 .v5-dark .tax-pair>div,.v5-dark .v5-tax-summary>div{background:#111827;border-color:#334155;color:#e2e8f0}
 .v5-dark .tax-sub{color:#cbd5e1}
 @media(max-width:750px){.v5-tax-summary{grid-template-columns:1fr}.tax-pair{flex-direction:column}.tax-pair>div{width:100%}}
+/* ===== زر الوضع الداكن أعلى الصفحة ===== */
+.top-theme-btn{
+  position:fixed;
+  top:14px;
+  right:14px;
+  z-index:1000;
+  min-height:42px;
+  padding:0 14px;
+  border:1px solid var(--border);
+  border-radius:12px;
+  background:#fff;
+  color:#334155;
+  box-shadow:0 8px 24px rgba(15,23,42,.10);
+  font-weight:900;
+  cursor:pointer;
+}
+.top-theme-btn:hover{border-color:#bfdbfe;color:var(--blue)}
+.v5-dark .top-theme-btn{background:#111827;color:#f8fafc;border-color:#334155}
+@media(max-width:750px){
+  .top-theme-btn{top:10px;right:10px;font-size:12px;min-height:40px;padding:0 11px}
+}
 </style>
 </head>
 
 <body>
+
+<button type="button" id="topThemeBtn" class="top-theme-btn" aria-label="تبديل الوضع الداكن">🌙 الوضع الداكن</button>
 
 <header>
   <div class="container">
@@ -889,6 +912,42 @@ details.v6-fold[open] summary:after{content:"−"}
   </div>
 </section>
 
+<section class="card v5-section" id="smartPricingSection">
+  <h2 class="section-title">🎯 تحليل التسعير الذكي</h2>
+  <p class="v5-muted">تطوير مختصر يساعدك تقارن سعرك بالسوق وتحسب الربح الشهري بعد المصاريف الثابتة.</p>
+
+  <div class="grid" style="margin-top:14px">
+    <div class="field">
+      <label for="marketPrice">متوسط سعر المنافسين (ر.س)</label>
+      <input id="marketPrice" type="number" min="0" step="0.01" placeholder="مثال: 129">
+      <small>أدخل متوسط أسعار المنافسين إذا كان لديك.</small>
+    </div>
+
+    <div class="field">
+      <label for="monthlyFixedCosts">المصاريف الثابتة الشهرية (ر.س)</label>
+      <input id="monthlyFixedCosts" type="number" min="0" step="0.01" value="0" placeholder="مثال: 2000">
+      <small>إيجار، اشتراكات، رواتب أو أي مصاريف شهرية ثابتة.</small>
+    </div>
+  </div>
+
+  <div class="v5-grid" style="margin-top:12px">
+    <div class="v5-card">
+      <div class="v5-muted">موقع سعرك مقارنة بالمنافسين</div>
+      <div class="v5-number" id="marketPosition">احسب السعر أولًا</div>
+    </div>
+    <div class="v5-card">
+      <div class="v5-muted">الربح الشهري بعد المصاريف الثابتة</div>
+      <div class="v5-number"><span id="monthlyProfitAfterFixed">0.00</span> ر.س</div>
+    </div>
+    <div class="v5-card">
+      <div class="v5-muted">المصاريف الثابتة لكل طلب</div>
+      <div class="v5-number"><span id="fixedCostPerOrder">0.00</span> ر.س</div>
+    </div>
+  </div>
+
+  <div class="note" id="smartPricingNote">أدخل متوسط سعر المنافسين وعدد المبيعات الشهرية ثم احسب السعر لعرض التحليل.</div>
+</section>
+
 <section class="card v5-section" id="multiProductSection">
   <h2 class="section-title">🛒 حاسبة سلة المنتجات</h2>
   <p class="v5-muted">أضف عدة منتجات لمعرفة تكلفة السلة والربح الإجمالي عند بيعها كطلب واحد. الشحن والرسوم الثابتة من الحسبة الأساسية تُطبق على الطلب.</p>
@@ -918,7 +977,7 @@ details.v6-fold[open] summary:after{content:"−"}
     <button type="button" class="secondary" id="v5CopyFull">نسخ التقرير الكامل</button>
     <button type="button" class="secondary" id="v5DownloadReport">تحميل التقرير TXT</button>
     <button type="button" class="secondary" id="v5ShareLink">مشاركة برابط</button>
-    <button type="button" class="secondary" id="v5Theme">🌙 الوضع الداكن</button>
+    <button type="button" class="secondary hidden" id="v5Theme">🌙 الوضع الداكن</button>
   </div>
   <div class="note" id="v5ReportStatus">احسب السعر أولًا لتكوين التقرير.</div>
 </section>
@@ -2558,6 +2617,95 @@ document.addEventListener("DOMContentLoaded",()=>{
   "description":"حاسبة تسعير للمتاجر تساعد على حساب سعر البيع والربح والخصومات والضريبة ونقطة التعادل.",
   "offers":{"@type":"Offer","price":"0","priceCurrency":"SAR"}
 }
+</script>
+
+<script>
+/* ===== تطويرات إضافية: تحليل السوق والمصاريف الثابتة ===== */
+(function(){
+  "use strict";
+
+  function el(id){ return document.getElementById(id); }
+  function num(id){
+    const x=el(id);
+    const v=x ? parseFloat(x.value) : 0;
+    return Number.isFinite(v) ? v : 0;
+  }
+  function money2(v){ return Number.isFinite(v) ? v.toFixed(2) : "0.00"; }
+
+  function updateSmartPricing(){
+    const r=window.lastResult || null;
+    const market=num("marketPrice");
+    const fixed=num("monthlyFixedCosts");
+    const sales=num("monthlySales");
+    const position=el("marketPosition");
+    const note=el("smartPricingNote");
+
+    if(!r){
+      if(position) position.textContent="احسب السعر أولًا";
+      if(el("monthlyProfitAfterFixed")) el("monthlyProfitAfterFixed").textContent="0.00";
+      if(el("fixedCostPerOrder")) el("fixedCostPerOrder").textContent="0.00";
+      if(note) note.textContent="أدخل متوسط سعر المنافسين وعدد المبيعات الشهرية ثم احسب السعر لعرض التحليل.";
+      return;
+    }
+
+    const price=Number(r.priceBeforeTax ?? r.commercialPrice ?? r.price ?? 0);
+    const profit=Number(r.profit)||0;
+    const monthlyProfit=profit*sales;
+    const fixedPerOrder=sales>0 ? fixed/sales : 0;
+    const afterFixed=monthlyProfit-fixed;
+
+    if(el("monthlyProfitAfterFixed")) el("monthlyProfitAfterFixed").textContent=money2(afterFixed);
+    if(el("fixedCostPerOrder")) el("fixedCostPerOrder").textContent=money2(fixedPerOrder);
+
+    if(position){
+      if(market<=0){
+        position.textContent="أدخل سعر المنافسين";
+      }else{
+        const diff=((price-market)/market)*100;
+        if(Math.abs(diff)<3){
+          position.textContent="قريب من السوق";
+        }else if(diff>0){
+          position.textContent="أعلى من السوق "+money2(diff)+"%";
+        }else{
+          position.textContent="أقل من السوق "+money2(Math.abs(diff))+"%";
+        }
+      }
+    }
+
+    if(note){
+      if(market<=0){
+        note.textContent="أدخل متوسط سعر المنافسين لعرض مقارنة مباشرة مع سعرك.";
+      }else if(price>market*1.10){
+        note.textContent="سعرك أعلى من متوسط المنافسين بأكثر من 10%. تأكد أن القيمة المقدمة تبرر الفرق.";
+      }else if(price<market*0.90){
+        note.textContent="سعرك أقل من متوسط المنافسين بأكثر من 10%. راجع هامش الربح وتأكد أنك لا تبيع بأقل من القيمة المناسبة.";
+      }else{
+        note.textContent="سعرك ضمن نطاق قريب من متوسط المنافسين. القرار النهائي يعتمد على القيمة والمنافسة وتكاليفك.";
+      }
+    }
+  }
+
+  const oldUpdate=window.updateDashboard;
+  window.updateDashboard=function(){
+    if(typeof oldUpdate==="function") oldUpdate();
+    updateSmartPricing();
+  };
+
+  ["marketPrice","monthlyFixedCosts","monthlySales"].forEach(id=>{
+    const x=el(id);
+    if(x) x.addEventListener("input",updateSmartPricing);
+  });
+
+  const topTheme=el("topThemeBtn");
+  const oldTheme=el("v5Theme");
+  if(topTheme){
+    topTheme.addEventListener("click",function(){
+      if(oldTheme) oldTheme.click();
+    });
+  }
+
+  setTimeout(updateSmartPricing,50);
+})();
 </script>
 
 </body>
