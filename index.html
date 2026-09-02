@@ -6,108 +6,337 @@
 <title>سعّرها | حاسبة سعر البيع</title>
 <style>
 *{box-sizing:border-box}
-body{margin:0;font-family:Tahoma,Arial,sans-serif;background:#f5f7fb;color:#172033}
+:root{
+  --blue:#2563eb;
+  --blue-dark:#1d4ed8;
+  --blue-light:#eff6ff;
+  --text:#172033;
+  --muted:#64748b;
+  --border:#e5e7eb;
+  --bg:#f5f7fb;
+  --green:#15803d;
+  --green-bg:#f0fdf4;
+  --red:#b91c1c;
+  --red-bg:#fef2f2;
+}
+body{
+  margin:0;
+  font-family:Tahoma,Arial,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+}
 .container{width:min(1050px,calc(100% - 30px));margin:auto}
-header{text-align:center;padding:55px 0 25px}
-.logo{font-size:38px;font-weight:900;margin-bottom:10px}.logo span{color:#2563eb}
-header p{margin:0;color:#64748b}
-.card{background:#fff;border:1px solid #e5e7eb;border-radius:22px;padding:28px;box-shadow:0 12px 35px rgba(15,23,42,.07);margin-bottom:25px}
+header{text-align:center;padding:45px 0 25px}
+.logo{font-size:40px;font-weight:900;margin-bottom:10px}
+.logo span{color:var(--blue)}
+header p{margin:0;color:var(--muted);line-height:1.7}
+
+.card{
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:22px;
+  padding:28px;
+  box-shadow:0 12px 35px rgba(15,23,42,.07);
+  margin-bottom:22px;
+}
+.section-title{margin:0 0 20px;font-size:23px}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
-.section-title{margin:0 0 20px}
 .field label{display:block;font-weight:800;margin-bottom:8px;font-size:14px}
-.field small{display:block;color:#94a3b8;margin-top:6px;font-size:12px}
-input{width:100%;height:50px;border:1px solid #dbe1ea;border-radius:12px;padding:0 15px;font-size:16px;outline:none;background:#fff;direction:ltr;text-align:right}
-input:focus{border-color:#2563eb;box-shadow:0 0 0 3px rgba(37,99,235,.1)}
+.field small{display:block;color:#94a3b8;margin-top:6px;font-size:12px;line-height:1.5}
+input{
+  width:100%;
+  height:50px;
+  border:1px solid #dbe1ea;
+  border-radius:12px;
+  padding:0 15px;
+  font-size:16px;
+  outline:none;
+  background:#fff;
+  direction:ltr;
+  text-align:right;
+}
+input:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
+
 .buttons{display:flex;gap:12px;margin-top:22px}
-button{border:0;border-radius:12px;height:50px;padding:0 25px;font-size:16px;font-weight:800;cursor:pointer}
-.primary{background:#2563eb;color:white;flex:1}.primary:hover{background:#1d4ed8}
+button{
+  border:0;
+  border-radius:12px;
+  min-height:50px;
+  padding:0 25px;
+  font-size:16px;
+  font-weight:800;
+  cursor:pointer;
+  transition:.15s;
+}
+button:active{transform:scale(.98)}
+.primary{background:var(--blue);color:#fff;flex:1}
+.primary:hover{background:var(--blue-dark)}
 .secondary{background:#eef2f7;color:#334155}
-.result{display:none}.result.show{display:block}
-.price-box{background:#eff6ff;border:1px solid #bfdbfe;border-radius:18px;padding:25px;text-align:center;margin-bottom:18px}
-.price-label{color:#64748b;font-size:14px;margin-bottom:8px}
-.price{font-size:42px;font-weight:900;color:#1d4ed8}.currency{font-size:20px}
-.breakdown{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-.stat{border:1px solid #e5e7eb;border-radius:15px;padding:17px}
-.stat .label{color:#64748b;font-size:12px;margin-bottom:7px}.stat .value{font-size:18px;font-weight:900}
-.note{margin-top:15px;color:#64748b;font-size:13px;line-height:1.7;background:#f8fafc;border-radius:12px;padding:12px}
-.error{display:none;color:#b91c1c;background:#fef2f2;border:1px solid #fecaca;padding:12px;border-radius:12px;margin-top:15px;font-size:14px}
-.last{margin-top:20px}
-.last h3{margin:0 0 14px}
-table{width:100%;border-collapse:collapse}
-td{padding:12px;border-bottom:1px solid #e5e7eb}
-td:last-child{font-weight:800;text-align:left;direction:ltr}
-.copy-btn{margin-top:14px;width:100%;background:#eef2f7;color:#334155}
+.secondary:hover{background:#e2e8f0}
+
+.error{
+  display:none;
+  color:var(--red);
+  background:var(--red-bg);
+  border:1px solid #fecaca;
+  padding:12px;
+  border-radius:12px;
+  margin-top:15px;
+  font-size:14px;
+  line-height:1.6;
+}
+
+.result{display:none}
+.result.show{display:block}
+
+.price-box{
+  background:var(--blue-light);
+  border:1px solid #bfdbfe;
+  border-radius:18px;
+  padding:25px;
+  text-align:center;
+  margin-bottom:18px;
+}
+.price-label{color:var(--muted);font-size:14px;margin-bottom:8px}
+.price{font-size:44px;font-weight:900;color:var(--blue-dark)}
+.currency{font-size:20px}
+
+.breakdown{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:12px;
+}
+.stat{border:1px solid var(--border);border-radius:15px;padding:17px}
+.stat .label{color:var(--muted);font-size:12px;margin-bottom:7px}
+.stat .value{font-size:18px;font-weight:900}
+
+.profit-good{
+  color:var(--green);
+  background:var(--green-bg);
+  border-color:#bbf7d0;
+}
+
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px}
+.action-btn{width:100%;background:#eef2f7;color:#334155}
+.action-btn:hover{background:#e2e8f0}
+
+.last-box{margin-top:22px}
+.last-box h3{margin:0 0 14px;font-size:19px}
+
+.table-wrap{overflow-x:auto;border:1px solid var(--border);border-radius:15px}
+table{width:100%;border-collapse:collapse;min-width:500px;background:#fff}
+th,td{padding:13px;border-bottom:1px solid var(--border);text-align:right}
+th{background:#f8fafc;font-size:13px;color:var(--muted)}
+td:last-child{text-align:left;direction:ltr;font-weight:800}
+tr:last-child td{border-bottom:0}
+.total-row td{font-weight:900;background:#f8fafc}
+.profit-row td{font-weight:900;color:var(--green);background:var(--green-bg)}
+
+.formula{
+  margin-top:18px;
+  background:#f8fafc;
+  border-radius:14px;
+  padding:15px;
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.8;
+}
+.formula strong{color:var(--text)}
+
+.note{
+  margin-top:15px;
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.7;
+  background:#f8fafc;
+  border-radius:12px;
+  padding:12px;
+}
+
 footer{text-align:center;color:#94a3b8;font-size:12px;padding:10px 0 35px}
+
 @media(max-width:700px){
-header{padding-top:35px}.logo{font-size:32px}.grid{grid-template-columns:1fr}
-.breakdown{grid-template-columns:1fr 1fr}.card{padding:20px}.buttons{flex-direction:column}
-.price{font-size:35px}table{font-size:14px}
+  header{padding-top:32px}
+  .logo{font-size:33px}
+  .grid{grid-template-columns:1fr}
+  .breakdown{grid-template-columns:1fr 1fr}
+  .card{padding:20px}
+  .buttons{flex-direction:column}
+  .actions{grid-template-columns:1fr}
+  .price{font-size:36px}
 }
 </style>
 </head>
+
 <body>
 <header>
-<div class="container">
-<div class="logo">سعّر<span>ها</span></div>
-<p>احسب سعر البيع المناسب لمنتجك مع معرفة الربح والرسوم بوضوح.</p>
-</div>
+  <div class="container">
+    <div class="logo">سعّر<span>ها</span></div>
+    <p>حاسبة سعر البيع لأصحاب المتاجر — احسب السعر، التكلفة، الرسوم والربح بوضوح.</p>
+  </div>
 </header>
 
 <main class="container">
+
 <section class="card">
-<h2 class="section-title">بيانات المنتج</h2>
+  <h2 class="section-title">بيانات المنتج</h2>
 
-<div class="grid">
-<div class="field"><label for="productCost">تكلفة المنتج</label><input id="productCost" type="number" min="0" step="0.01" placeholder="مثال: 50"><small>سعر شراء المنتج أو تكلفة تصنيعه.</small></div>
-<div class="field"><label for="shipping">الشحن</label><input id="shipping" type="number" min="0" step="0.01" value="0" placeholder="مثال: 15"><small>تكلفة الشحن التي تتحملها أنت.</small></div>
-<div class="field"><label for="fixedFees">رسوم ثابتة</label><input id="fixedFees" type="number" min="0" step="0.01" value="0" placeholder="مثال: 2"><small>أي رسوم ثابتة لكل طلب.</small></div>
-<div class="field"><label for="paymentFee">رسوم الدفع (%)</label><input id="paymentFee" type="number" min="0" max="99" step="0.01" value="0" placeholder="مثال: 2.5"><small>نسبة الرسوم التي تُخصم من سعر البيع.</small></div>
-<div class="field"><label for="profitMargin">هامش الربح المطلوب (%)</label><input id="profitMargin" type="number" min="0" max="99" step="0.01" value="20" placeholder="مثال: 20"><small>نسبة الربح من سعر البيع، وليس زيادة على التكلفة.</small></div>
-<div class="field"><label for="otherCosts">تكاليف أخرى</label><input id="otherCosts" type="number" min="0" step="0.01" value="0" placeholder="مثال: 5"><small>تغليف أو عمولة إضافية أو تكلفة أخرى.</small></div>
-</div>
+  <div class="grid">
 
-<div id="error" class="error"></div>
+    <div class="field">
+      <label for="productCost">تكلفة المنتج</label>
+      <input id="productCost" type="number" min="0" step="0.01" placeholder="مثال: 50">
+      <small>سعر شراء المنتج أو تكلفة تصنيعه.</small>
+    </div>
 
-<div class="buttons">
-<button type="button" class="primary" id="calculateBtn">احسب سعر البيع</button>
-<button type="button" class="secondary" id="resetBtn">مسح</button>
-</div>
+    <div class="field">
+      <label for="shipping">الشحن</label>
+      <input id="shipping" type="number" min="0" step="0.01" value="0" placeholder="مثال: 15">
+      <small>تكلفة الشحن التي تتحملها أنت.</small>
+    </div>
+
+    <div class="field">
+      <label for="fixedFees">رسوم ثابتة</label>
+      <input id="fixedFees" type="number" min="0" step="0.01" value="0" placeholder="مثال: 2">
+      <small>أي رسوم ثابتة لكل طلب.</small>
+    </div>
+
+    <div class="field">
+      <label for="paymentFee">رسوم الدفع (%)</label>
+      <input id="paymentFee" type="number" min="0" max="99.99" step="0.01" value="0" placeholder="مثال: 2.5">
+      <small>نسبة الرسوم التي تُخصم من سعر البيع.</small>
+    </div>
+
+    <div class="field">
+      <label for="profitMargin">هامش الربح المطلوب (%)</label>
+      <input id="profitMargin" type="number" min="0" max="99.99" step="0.01" value="20" placeholder="مثال: 20">
+      <small>هامش الربح كنسبة من سعر البيع، وليس زيادة على التكلفة.</small>
+    </div>
+
+    <div class="field">
+      <label for="otherCosts">تكاليف أخرى</label>
+      <input id="otherCosts" type="number" min="0" step="0.01" value="0" placeholder="مثال: 5">
+      <small>تغليف، عمولة إضافية، أو أي تكلفة أخرى.</small>
+    </div>
+
+  </div>
+
+  <div id="error" class="error"></div>
+
+  <div class="buttons">
+    <button type="button" class="primary" id="calculateBtn">احسب سعر البيع</button>
+    <button type="button" class="secondary" id="resetBtn">مسح</button>
+  </div>
 </section>
+
 
 <section id="result" class="card result">
-<div class="price-box">
-<div class="price-label">سعر البيع المقترح</div>
-<div class="price"><span id="sellingPrice">0.00</span> <span class="currency">ر.س</span></div>
-</div>
 
-<div class="breakdown">
-<div class="stat"><div class="label">إجمالي التكلفة</div><div class="value"><span id="totalCost">0.00</span> ر.س</div></div>
-<div class="stat"><div class="label">رسوم الدفع</div><div class="value"><span id="paymentAmount">0.00</span> ر.س</div></div>
-<div class="stat"><div class="label">الربح الصافي</div><div class="value"><span id="netProfit">0.00</span> ر.س</div></div>
-<div class="stat"><div class="label">هامش الربح</div><div class="value"><span id="actualMargin">0.00</span>%</div></div>
-</div>
+  <div class="price-box">
+    <div class="price-label">سعر البيع المقترح</div>
+    <div class="price">
+      <span id="sellingPrice">0.00</span>
+      <span class="currency">ر.س</span>
+    </div>
+  </div>
 
-<button type="button" class="copy-btn" id="copyBtn">نسخ النتيجة</button>
+  <div class="breakdown">
+    <div class="stat">
+      <div class="label">إجمالي التكلفة</div>
+      <div class="value"><span id="totalCost">0.00</span> ر.س</div>
+    </div>
 
-<div class="last">
-<h3>تفاصيل آخر حسبة</h3>
-<table>
-<tr><td>تكلفة المنتج</td><td id="tableProductCost">0.00 ر.س</td></tr>
-<tr><td>الشحن</td><td id="tableShipping">0.00 ر.س</td></tr>
-<tr><td>الرسوم الثابتة</td><td id="tableFixedFees">0.00 ر.س</td></tr>
-<tr><td>التكاليف الأخرى</td><td id="tableOtherCosts">0.00 ر.س</td></tr>
-<tr><td>رسوم الدفع</td><td id="tablePaymentFee">0.00 ر.س</td></tr>
-<tr><td>إجمالي التكلفة</td><td id="tableTotalCost">0.00 ر.س</td></tr>
-<tr><td>الربح الصافي</td><td id="tableNetProfit">0.00 ر.س</td></tr>
-<tr><td>هامش الربح الفعلي</td><td id="tableActualMargin">0.00%</td></tr>
-</table>
-</div>
+    <div class="stat">
+      <div class="label">رسوم الدفع</div>
+      <div class="value"><span id="paymentAmount">0.00</span> ر.س</div>
+    </div>
 
-<div class="note">الحسبة تفترض أن رسوم الدفع وهامش الربح محسوبان كنسبة من سعر البيع. يتم حل السعر رياضيًا بدل إعطاء رقم تقريبي.</div>
+    <div class="stat profit-good">
+      <div class="label">الربح الصافي</div>
+      <div class="value"><span id="netProfit">0.00</span> ر.س</div>
+    </div>
+
+    <div class="stat">
+      <div class="label">هامش الربح</div>
+      <div class="value"><span id="actualMargin">0.00</span>%</div>
+    </div>
+  </div>
+
+
+  <div class="actions">
+    <button type="button" class="action-btn" id="copyBtn">نسخ النتيجة</button>
+    <button type="button" class="action-btn" id="restoreBtn">استرجاع آخر حسبة</button>
+  </div>
+
+
+  <div class="last-box">
+    <h3>تفاصيل الحسبة</h3>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>البند</th>
+            <th>القيمة</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>تكلفة المنتج</td>
+            <td id="tableProductCost">0.00 ر.س</td>
+          </tr>
+          <tr>
+            <td>الشحن</td>
+            <td id="tableShipping">0.00 ر.س</td>
+          </tr>
+          <tr>
+            <td>الرسوم الثابتة</td>
+            <td id="tableFixedFees">0.00 ر.س</td>
+          </tr>
+          <tr>
+            <td>التكاليف الأخرى</td>
+            <td id="tableOtherCosts">0.00 ر.س</td>
+          </tr>
+          <tr>
+            <td>رسوم الدفع</td>
+            <td id="tablePaymentFee">0.00 ر.س</td>
+          </tr>
+          <tr class="total-row">
+            <td>إجمالي التكلفة</td>
+            <td id="tableTotalCost">0.00 ر.س</td>
+          </tr>
+          <tr class="profit-row">
+            <td>الربح الصافي</td>
+            <td id="tableNetProfit">0.00 ر.س</td>
+          </tr>
+          <tr>
+            <td>هامش الربح الفعلي</td>
+            <td id="tableActualMargin">0.00%</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+
+  <div class="formula">
+    <strong>طريقة الحسبة:</strong><br>
+    إجمالي التكلفة = تكلفة المنتج + الشحن + الرسوم الثابتة + التكاليف الأخرى.<br>
+    سعر البيع = إجمالي التكلفة ÷ (1 − رسوم الدفع% − هامش الربح%).<br>
+    بهذه الطريقة يتم حساب السعر رياضيًا لتحقيق هامش الربح المطلوب من سعر البيع.
+  </div>
+
+  <div class="note">
+    الحسبة تفترض أن رسوم الدفع وهامش الربح محسوبان كنسبة من سعر البيع.
+    إذا كانت منصة الدفع لديها رسوم ثابتة بالإضافة إلى النسبة، أضفها ضمن الرسوم الثابتة.
+  </div>
+
 </section>
+
 </main>
 
 <footer>سعّرها — حاسبة بسيطة وواضحة لأصحاب المتاجر.</footer>
+
 
 <script>
 "use strict";
@@ -145,6 +374,23 @@ function hideError(){
   if(err) err.style.display="none";
 }
 
+function saveCalculation(data){
+  try{
+    localStorage.setItem("sa3erhaLastCalculation",JSON.stringify(data));
+  }catch(e){}
+}
+
+function readCalculation(){
+  try{
+    const saved=localStorage.getItem("sa3erhaLastCalculation");
+    if(!saved) return null;
+    const data=JSON.parse(saved);
+    return data && typeof data==="object" ? data : null;
+  }catch(e){
+    return null;
+  }
+}
+
 function calculate(){
   try{
     hideError();
@@ -167,8 +413,13 @@ function calculate(){
       return;
     }
 
+    if(shipping<0 || fixed<0 || other<0){
+      showError("التكاليف لا يمكن أن تكون سالبة.");
+      return;
+    }
+
     if(fee<0 || fee>=100 || margin<0 || margin>=100){
-      showError("نسبة الرسوم وهامش الربح يجب أن تكون بين 0% و99%.");
+      showError("نسبة الرسوم وهامش الربح يجب أن تكون بين 0% و99.99%.");
       return;
     }
 
@@ -185,6 +436,11 @@ function calculate(){
     const profit=price-total-payment;
     const actual=price>0 ? (profit/price)*100 : 0;
 
+    if(!Number.isFinite(price) || !Number.isFinite(profit)){
+      showError("تعذر حساب السعر. راجع القيم المدخلة.");
+      return;
+    }
+
     setText("sellingPrice",money(price));
     setText("totalCost",money(total));
     setText("paymentAmount",money(payment));
@@ -200,19 +456,18 @@ function calculate(){
     setText("tableNetProfit",money(profit)+" ر.س");
     setText("tableActualMargin",actual.toFixed(2)+"%");
 
-    try{
-      localStorage.setItem("sa3erhaLastCalculation",JSON.stringify({
-        productCost:product,
-        shipping:shipping,
-        fixedFees:fixed,
-        paymentFee:fee,
-        profitMargin:margin,
-        otherCosts:other
-      }));
-    }catch(e){}
+    saveCalculation({
+      productCost:product,
+      shipping:shipping,
+      fixedFees:fixed,
+      paymentFee:fee,
+      profitMargin:margin,
+      otherCosts:other
+    });
 
     res.classList.add("show");
     res.scrollIntoView({behavior:"smooth",block:"start"});
+
   }catch(e){
     showError("حدث خطأ غير متوقع أثناء الحسبة. جرّب تحديث الصفحة.");
     console.error(e);
@@ -232,57 +487,73 @@ function resetForm(){
   if(res) res.classList.remove("show");
 }
 
-function loadLastCalculation(){
-  try{
-    const saved=localStorage.getItem("sa3erhaLastCalculation");
-    if(!saved) return;
-    const data=JSON.parse(saved);
-    if(!data || typeof data!=="object") return;
+function restoreLastCalculation(){
+  const data=readCalculation();
 
-    if(data.productCost!==undefined) setValue("productCost",data.productCost);
-    if(data.shipping!==undefined) setValue("shipping",data.shipping);
-    if(data.fixedFees!==undefined) setValue("fixedFees",data.fixedFees);
-    if(data.paymentFee!==undefined) setValue("paymentFee",data.paymentFee);
-    if(data.profitMargin!==undefined) setValue("profitMargin",data.profitMargin);
-    if(data.otherCosts!==undefined) setValue("otherCosts",data.otherCosts);
+  if(!data){
+    showError("ما فيه حسبة محفوظة حتى الآن.");
+    return;
+  }
 
-    calculate();
-  }catch(e){}
+  setValue("productCost",data.productCost ?? "");
+  setValue("shipping",data.shipping ?? 0);
+  setValue("fixedFees",data.fixedFees ?? 0);
+  setValue("paymentFee",data.paymentFee ?? 0);
+  setValue("profitMargin",data.profitMargin ?? 20);
+  setValue("otherCosts",data.otherCosts ?? 0);
+
+  calculate();
 }
 
 function copyResult(){
   const price=document.getElementById("sellingPrice");
   if(!price) return;
 
-  const text=
-    "سعر البيع المقترح: "+price.textContent+" ر.س\n"+
+  const text =
+    "سعر البيع المقترح: "+(price.textContent||"0.00")+" ر.س\n"+
     "إجمالي التكلفة: "+(document.getElementById("totalCost")?.textContent||"0.00")+" ر.س\n"+
     "رسوم الدفع: "+(document.getElementById("paymentAmount")?.textContent||"0.00")+" ر.س\n"+
     "الربح الصافي: "+(document.getElementById("netProfit")?.textContent||"0.00")+" ر.س\n"+
     "هامش الربح: "+(document.getElementById("actualMargin")?.textContent||"0.00")+"%";
 
-  navigator.clipboard?.writeText(text).then(()=>{
-    const btn=document.getElementById("copyBtn");
-    if(!btn) return;
-    const old=btn.textContent;
-    btn.textContent="تم النسخ ✓";
-    setTimeout(()=>btn.textContent=old,1500);
-  }).catch(()=>{
-    window.prompt("انسخ النتيجة:",text);
-  });
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(text).then(()=>{
+      showCopySuccess();
+    }).catch(()=>{
+      fallbackCopy(text);
+    });
+  }else{
+    fallbackCopy(text);
+  }
+}
+
+function showCopySuccess(){
+  const btn=document.getElementById("copyBtn");
+  if(!btn) return;
+
+  const old=btn.textContent;
+  btn.textContent="تم النسخ ✓";
+  setTimeout(()=>{
+    btn.textContent=old;
+  },1500);
+}
+
+function fallbackCopy(text){
+  window.prompt("انسخ النتيجة:",text);
 }
 
 document.addEventListener("DOMContentLoaded",()=>{
   const calculateBtn=document.getElementById("calculateBtn");
   const resetBtn=document.getElementById("resetBtn");
   const copyBtn=document.getElementById("copyBtn");
+  const restoreBtn=document.getElementById("restoreBtn");
 
   if(calculateBtn) calculateBtn.addEventListener("click",calculate);
   if(resetBtn) resetBtn.addEventListener("click",resetForm);
   if(copyBtn) copyBtn.addEventListener("click",copyResult);
-
-  loadLastCalculation();
+  if(restoreBtn) restoreBtn.addEventListener("click",restoreLastCalculation);
 });
 </script>
+
 </body>
 </html>
