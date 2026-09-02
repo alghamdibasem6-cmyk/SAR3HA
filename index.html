@@ -457,6 +457,23 @@ details.v6-fold[open] summary:after{content:"−"}
   .top-theme-btn{top:10px;right:10px;font-size:12px;min-height:40px;padding:0 11px}
 }
 </style>
+
+/* V9: psychological pricing + advanced discount analysis + dashboard upgrades */
+.v9-price-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:14px}
+.v9-price-card,.v9-stat{border:1px solid #e2e8f0;border-radius:16px;padding:14px;background:#fff}
+.v9-price-card strong,.v9-stat strong{display:block;font-size:22px;margin-top:6px}
+.v9-price-card .v9-tag{display:inline-block;font-size:12px;padding:4px 8px;border-radius:999px;background:#f1f5f9;margin-bottom:6px}
+.v9-price-card.recommended{border-width:2px}
+.v9-price-note{margin-top:12px;padding:12px 14px;border-radius:12px;background:#f8fafc}
+.v9-discount-table td,.v9-discount-table th{white-space:nowrap}
+.v9-dashboard-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:12px}
+.v9-mini{font-size:13px;color:#64748b}
+.v9-number{font-size:23px;font-weight:800;margin-top:5px}
+.v5-dark .v9-price-card,.v5-dark .v9-stat{background:#111827;border-color:#334155}
+.v5-dark .v9-price-note{background:#0f172a}
+@media(max-width:900px){.v9-price-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.v9-dashboard-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){.v9-price-grid,.v9-dashboard-grid{grid-template-columns:1fr}}
+
 </head>
 
 <body>
@@ -910,6 +927,15 @@ details.v6-fold[open] summary:after{content:"−"}
       </table>
     </div>
   </div>
+
+  <div class="subsection">
+    <h3>📈 مؤشرات التاجر المتقدمة</h3>
+    <div class="v9-dashboard-grid">
+      <div class="v9-stat"><div class="v9-mini">إيراد الشهر المتوقع</div><div class="v9-number"><span id="v9MonthlyRevenue">0.00</span> ر.س</div></div>
+      <div class="v9-stat"><div class="v9-mini">الربح بعد المصاريف الثابتة</div><div class="v9-number"><span id="v9MonthlyAfterFixed">0.00</span> ر.س</div></div>
+      <div class="v9-stat"><div class="v9-mini">الربح السنوي المتوقع</div><div class="v9-number"><span id="v9YearlyProfit">0.00</span> ر.س</div></div>
+    </div>
+  </div>
 </section>
 
 <section class="card v5-section" id="smartPricingSection">
@@ -946,6 +972,39 @@ details.v6-fold[open] summary:after{content:"−"}
   </div>
 
   <div class="note" id="smartPricingNote">أدخل متوسط سعر المنافسين وعدد المبيعات الشهرية ثم احسب السعر لعرض التحليل.</div>
+</section>
+
+
+<section class="card v5-section" id="psychologicalPricingSection">
+  <h2 class="section-title">💰 التسعير النفسي</h2>
+  <p class="v5-muted">يعرض لك أسعارًا قريبة من سعرك الحالي بصيغ شائعة مثل 49.90 و49.99 و50، ثم يقارن الربح والهامش لكل خيار.</p>
+  <div class="grid" style="margin-top:14px">
+    <div class="field">
+      <label for="psychBasePrice">السعر الذي تريد تحليله (ر.س)</label>
+      <input id="psychBasePrice" type="number" min="0" step="0.01" placeholder="مثال: 100">
+      <small>إذا تركته فارغًا، سيستخدم سعر الحسبة الحالية قبل الضريبة.</small>
+    </div>
+  </div>
+  <div class="v9-price-grid" id="psychPricingResults">
+    <div class="v9-price-card"><span class="v9-tag">قريب</span><strong>—</strong><div class="v9-mini">احسب السعر أولًا.</div></div>
+  </div>
+  <div class="v9-price-note" id="psychPricingNote">اختر السعر أو احسب المنتج أولًا لعرض المقارنة.</div>
+</section>
+
+<section class="card v5-section" id="advancedDiscountSection">
+  <h2 class="section-title">🏷️ تحليل الخصم المتقدم</h2>
+  <p class="v5-muted">شوف تأثير الخصم على سعر العميل والربح والهامش، وكم يجب أن ترفع السعر الأصلي حتى يبقى ربحك المستهدف كما هو.</p>
+  <div class="grid" style="margin-top:14px">
+    <div class="field"><label for="advDiscountTargetMargin">الهامش المستهدف بعد الخصم (%)</label><input id="advDiscountTargetMargin" type="number" min="0" max="99.9" step="0.1" placeholder="مثال: 25"><small>اختياري. اتركه فارغًا لاستخدام هامشك الحالي.</small></div>
+    <div class="field"><label for="advDiscountMax">أقصى خصم للتحليل (%)</label><input id="advDiscountMax" type="number" min="1" max="90" step="1" value="50"></div>
+  </div>
+  <div class="table-wrap" style="margin-top:14px">
+    <table class="v5-table v9-discount-table">
+      <thead><tr><th>الخصم</th><th>سعر العميل قبل الضريبة</th><th>سعر العميل شامل الضريبة</th><th>الربح</th><th>الهامش</th><th>السعر الأصلي المقترح</th></tr></thead>
+      <tbody id="advancedDiscountBody"><tr><td colspan="6" style="text-align:center;color:#64748b">احسب السعر أولًا.</td></tr></tbody>
+    </table>
+  </div>
+  <div class="v9-price-note" id="advancedDiscountNote">سيظهر التحليل بعد حساب السعر.</div>
 </section>
 
 <section class="card v5-section" id="multiProductSection">
@@ -2705,6 +2764,59 @@ document.addEventListener("DOMContentLoaded",()=>{
   }
 
   setTimeout(updateSmartPricing,50);
+})();
+</script>
+
+
+<script>
+(function(){
+  function n(v){ const x=parseFloat(v); return Number.isFinite(x)?x:0; }
+  function fmt(v){ return Number(v||0).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2}); }
+  function currentResult(){ return window.lastResult || null; }
+  function basePrice(){ const r=currentResult(); return n(document.getElementById('psychBasePrice')?.value) || n(r?.priceBeforeTax ?? r?.commercialPrice ?? r?.price); }
+  function calcPsych(){
+    const r=currentResult(); const base=basePrice(); const box=document.getElementById('psychPricingResults'); const note=document.getElementById('psychPricingNote');
+    if(!box) return; if(base<=0){ box.innerHTML='<div class="v9-price-card"><span class="v9-tag">جاهز</span><strong>—</strong><div class="v9-mini">احسب السعر أولًا.</div></div>'; if(note) note.textContent='اختر السعر أو احسب المنتج أولًا لعرض المقارنة.'; return; }
+    const candidates=[Math.max(0.01,Math.floor(base)+0.90),Math.max(0.01,Math.floor(base)+0.99),Math.round(base),Math.max(0.01,Math.ceil(base/5)*5-0.01)];
+    const uniq=[...new Set(candidates.map(x=>Math.round(x*100)/100))];
+    box.innerHTML=uniq.map((p,i)=>{
+      let profit='—',margin='—';
+      if(r){ const total=n(r.total); const fee=n(r.fee); const pr=p-total-(p*fee/100); profit=fmt(pr); margin=fmt(pr/p*100)+'%'; }
+      const tag=i===1?'الأشهر':(i===2?'رقم كامل':'خيار');
+      return '<div class="v9-price-card '+(i===1?'recommended':'')+'"><span class="v9-tag">'+tag+'</span><strong>'+fmt(p)+' ر.س</strong><div class="v9-mini">الربح: '+profit+' ر.س</div><div class="v9-mini">الهامش: '+margin+'</div></div>';
+    }).join('');
+    if(note) note.textContent='التسعير النفسي ليس ضمانًا لزيادة المبيعات؛ استخدم المقارنة مع سعر السوق وهامشك المستهدف لاتخاذ القرار.';
+  }
+  function calcAdvancedDiscount(){
+    const r=currentResult(), body=document.getElementById('advancedDiscountBody'), note=document.getElementById('advancedDiscountNote'); if(!body) return;
+    if(!r){body.innerHTML='<tr><td colspan="6" style="text-align:center;color:#64748b">احسب السعر أولًا.</td></tr>';return;}
+    const base=n(r.priceBeforeTax ?? r.commercialPrice ?? r.price), total=n(r.total), fee=n(r.fee), tax=n(r.tax);
+    if(base<=0){return;}
+    const max=Math.min(90,Math.max(1,n(document.getElementById('advDiscountMax')?.value)||50));
+    const targetRaw=document.getElementById('advDiscountTargetMargin')?.value; const target=targetRaw===''?n(r.actualMargin):Math.min(99.9,n(targetRaw));
+    const rows=[];
+    for(let d=0; d<=max; d+=10){
+      const customer=base*(1-d/100); const pay=customer*fee/100; const profit=customer-total-pay; const margin=customer>0?profit/customer*100:0;
+      const required=target<100?total/(1-fee/100-target/100)/(1-d/100):0;
+      rows.push('<tr><td>'+d+'%</td><td>'+fmt(customer)+' ر.س</td><td>'+fmt(customer*(1+tax/100))+' ر.س</td><td>'+fmt(profit)+' ر.س</td><td>'+fmt(margin)+'%</td><td>'+fmt(required)+' ر.س</td></tr>');
+    }
+    body.innerHTML=rows.join('');
+    if(note) note.textContent='السعر الأصلي المقترح في العمود الأخير هو السعر الذي تحتاجه قبل الخصم للمحافظة تقريبًا على هامش '+fmt(target)+'% بعد الخصم، وفق رسوم الدفع الحالية.';
+  }
+  function updateV9Dashboard(){
+    const r=currentResult(); if(!r) return; const sales=n(document.getElementById('monthlySales')?.value); const fixed=n(document.getElementById('monthlyFixedCosts')?.value);
+    const price=n(r.priceBeforeTax ?? r.commercialPrice ?? r.price); const profit=n(r.profit);
+    const revenue=price*sales, afterFixed=profit*sales-fixed, yearly=afterFixed*12;
+    const a=document.getElementById('v9MonthlyRevenue'),b=document.getElementById('v9MonthlyAfterFixed'),c=document.getElementById('v9YearlyProfit');
+    if(a)a.textContent=fmt(revenue); if(b)b.textContent=fmt(afterFixed); if(c)c.textContent=fmt(yearly);
+  }
+  window.updateV9All=function(){calcPsych();calcAdvancedDiscount();updateV9Dashboard();};
+  document.getElementById('psychBasePrice')?.addEventListener('input',calcPsych);
+  document.getElementById('advDiscountTargetMargin')?.addEventListener('input',calcAdvancedDiscount);
+  document.getElementById('advDiscountMax')?.addEventListener('input',calcAdvancedDiscount);
+  ['monthlySales','monthlyFixedCosts'].forEach(id=>document.getElementById(id)?.addEventListener('input',updateV9Dashboard));
+  const old=window.updateDashboard; if(typeof old==='function'){window.updateDashboard=function(){old.apply(this,arguments);window.updateV9All();};}
+  setTimeout(window.updateV9All,150);
 })();
 </script>
 
