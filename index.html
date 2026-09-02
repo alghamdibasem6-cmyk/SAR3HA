@@ -70,43 +70,102 @@ footer{text-align:center;color:#94a3b8;font-size:12px;padding:10px 0 35px}
 function n(id){const v=parseFloat(document.getElementById(id).value);return Number.isFinite(v)?v:0}
 function money(v){return v.toFixed(2)}
 function calculate(){
-const product=n("productCost"),shipping=n("shipping"),fixed=n("fixedFees"),fee=n("paymentFee"),margin=n("profitMargin"),other=n("otherCosts");
-const err=document.getElementById("error"),res=document.getElementById("result");err.style.display="none";res.classList.remove("show");
-if(product<=0){err.textContent="اكتب تكلفة المنتج أولًا.";err.style.display="block";return}
-if(fee<0||fee>=100||margin<0||margin>=100){err.textContent="نسبة الرسوم وهامش الربح يجب أن تكون بين 0% و99%.";err.style.display="block";return}
-const total=product+shipping+fixed+other,den=1-fee/100-margin/100;
-if(den<=0){err.textContent="النسب المدخلة مرتفعة جدًا ولا يمكن حساب سعر بيع صحيح.";err.style.display="block";return}
-const price=total/den,payment=price*fee/100,profit=price-total-payment,actual=profit/price*100;
-localStorage.setItem("sa3erhaLastCalculation",JSON.stringify({product,shipping,fixed,fee,margin,other}));
-document.getElementById("sellingPrice").textContent=money(price);
-document.getElementById("totalCost").textContent=money(total);
-document.getElementById("paymentAmount").textContent=money(payment);
-document.getElementById("netProfit").textContent=money(profit);
-document.getElementById("actualMargin").textContent=actual.toFixed(2);
-document.getElementById("tableProductCost").textContent=money(product);
-document.getElementById("tableShipping").textContent=money(shipping);
-document.getElementById("tableFixedFees").textContent=money(fixed);
-document.getElementById("tableOtherCosts").textContent=money(other);
-document.getElementById("tablePaymentFee").textContent=money(payment);
-res.classList.add("show");res.scrollIntoView({behavior:"smooth",block:"start"});
+  const product=n("productCost");
+  const shipping=n("shipping");
+  const fixed=n("fixedFees");
+  const fee=n("paymentFee");
+  const margin=n("profitMargin");
+  const other=n("otherCosts");
+
+  const err=document.getElementById("error");
+  const res=document.getElementById("result");
+
+  if(!err || !res) return;
+
+  err.style.display="none";
+  res.classList.remove("show");
+
+  if(product<=0){
+    err.textContent="اكتب تكلفة المنتج أولًا.";
+    err.style.display="block";
+    return;
+  }
+
+  if(fee<0 || fee>=100 || margin<0 || margin>=100){
+    err.textContent="نسبة الرسوم وهامش الربح يجب أن تكون بين 0% و99%.";
+    err.style.display="block";
+    return;
+  }
+
+  const total=product+shipping+fixed+other;
+  const den=1-fee/100-margin/100;
+
+  if(den<=0){
+    err.textContent="النسب المدخلة مرتفعة جدًا ولا يمكن حساب سعر بيع صحيح.";
+    err.style.display="block";
+    return;
+  }
+
+  const price=total/den;
+  const payment=price*fee/100;
+  const profit=price-total-payment;
+  const actual=profit/price*100;
+
+  const setText=(id,value)=>{
+    const el=document.getElementById(id);
+    if(el) el.textContent=value;
+  };
+
+  setText("sellingPrice",money(price));
+  setText("totalCost",money(total));
+  setText("paymentAmount",money(payment));
+  setText("netProfit",money(profit));
+  setText("actualMargin",actual.toFixed(2));
+
+  // الجدول - إذا كانت عناصره موجودة
+  setText("tableProductCost",money(product));
+  setText("tableShipping",money(shipping));
+  setText("tableFixedFees",money(fixed));
+  setText("tableOtherCosts",money(other));
+  setText("tablePaymentFee",money(payment));
+  setText("tableTotalCost",money(total));
+  setText("tableNetProfit",money(profit));
+  setText("tableActualMargin",actual.toFixed(2)+"%");
+
+  res.classList.add("show");
+  res.scrollIntoView({behavior:"smooth",block:"start"});
+
+  try{
+    localStorage.setItem("sa3erhaLastCalculation",JSON.stringify({
+      productCost:product,
+      shipping:shipping,
+      fixedFees:fixed,
+      paymentFee:fee,
+      profitMargin:margin,
+      otherCosts:other
+    }));
+  }catch(e){}
 }
-function loadLastCalculation(){
-const saved=localStorage.getItem("sa3erhaLastCalculation");
-if(!saved){alert("ما فيه حسبة محفوظة حتى الآن.");return}
-const data=JSON.parse(saved);
-document.getElementById("productCost").value=data.product;
-document.getElementById("shipping").value=data.shipping;
-document.getElementById("fixedFees").value=data.fixed;
-document.getElementById("paymentFee").value=data.fee;
-document.getElementById("profitMargin").value=data.margin;
-document.getElementById("otherCosts").value=data.other;
-calculate();
-}
+
 function resetForm(){
-document.getElementById("productCost").value="";document.getElementById("shipping").value="0";document.getElementById("fixedFees").value="0";
-document.getElementById("paymentFee").value="0";document.getElementById("profitMargin").value="20";document.getElementById("otherCosts").value="0";
-document.getElementById("error").style.display="none";document.getElementById("result").classList.remove("show");
+  const setValue=(id,value)=>{
+    const el=document.getElementById(id);
+    if(el) el.value=value;
+  };
+
+  setValue("productCost","");
+  setValue("shipping","0");
+  setValue("fixedFees","0");
+  setValue("paymentFee","0");
+  setValue("profitMargin","20");
+  setValue("otherCosts","0");
+
+  const err=document.getElementById("error");
+  const result=document.getElementById("result");
+  if(err) err.style.display="none";
+  if(result) result.classList.remove("show");
 }
+
 </script>
 </body>
 </html>
