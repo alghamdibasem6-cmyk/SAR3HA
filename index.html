@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="keywords" content="حاسبة سعر البيع, حاسبة هامش الربح, تسعير المنتجات, حاسبة الربح, حاسبة الخصم, سعّرها">
 <meta name="description" content="سعّرها - حاسبة سعر البيع والربح والخصم والضريبة ونقطة التعادل لأصحاب المتاجر.">
 <title>سعّرها | حاسبة سعر البيع والربح</title>
 
@@ -351,6 +352,72 @@ footer{text-align:center;color:#94a3b8;font-size:12px;padding:8px 0 35px}
   .v5-product-row{grid-template-columns:1fr 1fr}
   .v5-remove{grid-column:1/-1}
 }
+
+</style>
+<style>
+
+/* ===== سعّرها V6 — Comfortable UI layer ===== */
+:root{
+  --v6-bg:#f8fafc;--v6-card:#ffffff;--v6-line:#e2e8f0;--v6-text:#0f172a;
+  --v6-muted:#64748b;--v6-primary:#2563eb;--v6-primary-dark:#1d4ed8;
+  --v6-soft:#eff6ff;--v6-radius:18px;
+}
+body{background:var(--v6-bg);color:var(--v6-text);line-height:1.75}
+header{padding:42px 0 28px!important;background:linear-gradient(180deg,#fff 0%,#f8fbff 100%);border-bottom:1px solid var(--v6-line)}
+header .logo{font-size:38px!important;letter-spacing:-1px}
+header p{max-width:760px;margin:8px auto 0!important;color:var(--v6-muted);font-size:15px}
+.container{width:min(1100px,calc(100% - 28px))!important}
+.nav{position:sticky;top:10px;z-index:20;background:rgba(255,255,255,.92)!important;backdrop-filter:blur(12px);border:1px solid var(--v6-line);box-shadow:0 8px 30px rgba(15,23,42,.06);border-radius:16px;padding:8px!important;margin:18px auto 24px!important}
+.nav button{border-radius:11px!important;min-height:44px;padding:10px 16px!important;font-weight:800}
+.card,.v5-card{border:1px solid var(--v6-line)!important;border-radius:var(--v6-radius)!important;box-shadow:0 10px 30px rgba(15,23,42,.055)!important}
+.card{padding:26px!important}
+.section-title{font-size:24px!important;letter-spacing:-.3px}
+.grid,.v5-grid{gap:16px!important}
+.field input,.field select,.v5-card input,.v5-card select{min-height:48px!important;border:1px solid #cbd5e1!important;border-radius:12px!important;padding:11px 13px!important;transition:.18s}
+.field input:focus,.field select:focus,.v5-card input:focus,.v5-card select:focus{outline:0;border-color:var(--v6-primary)!important;box-shadow:0 0 0 4px rgba(37,99,235,.10)}
+label{font-weight:800!important;color:#334155!important;margin-bottom:6px}
+.buttons button,.primary,.secondary,.v5-toolbar button,.small-btn{min-height:46px!important;border-radius:12px!important;font-weight:800!important}
+.primary{box-shadow:0 8px 18px rgba(37,99,235,.18)}
+.result{background:linear-gradient(180deg,#fff,#f8fbff)!important}
+.price-box{border-radius:16px!important;background:var(--v6-soft)!important;border:1px solid #dbeafe}
+.price{font-size:42px!important;letter-spacing:-1px}
+.breakdown{gap:12px!important}
+.stat{border:1px solid var(--v6-line);border-radius:14px!important;padding:16px!important;background:#fff}
+.note,.help,.formula{border-radius:14px!important;border:1px solid var(--v6-line)}
+.v5-section{margin-top:28px!important}
+.v5-kpi{gap:12px!important}
+.v5-kpi>div,.v5-kpi .v5-card{border-radius:15px!important}
+.v5-table{border-radius:14px;overflow:hidden;border:1px solid var(--v6-line)}
+.v5-table table{margin:0!important}
+.history-item{border:1px solid var(--v6-line)!important;border-radius:14px!important;padding:14px!important;background:#fff}
+details.v6-fold{border:1px solid var(--v6-line);border-radius:15px;background:#fff;margin:16px 0;overflow:hidden}
+details.v6-fold summary{cursor:pointer;padding:16px 18px;font-weight:900;list-style:none}
+details.v6-fold summary::-webkit-details-marker{display:none}
+details.v6-fold summary:after{content:"＋";float:left;color:var(--v6-primary);font-size:20px}
+details.v6-fold[open] summary:after{content:"−"}
+.v6-seo{margin-top:28px}
+.v6-seo h2{font-size:23px;margin-bottom:8px}
+.v6-seo h3{font-size:18px;margin:22px 0 6px}
+.v6-seo p,.v6-seo li{color:#475569}
+.v6-tools{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:16px}
+.v6-tool{display:block;text-decoration:none;color:inherit;border:1px solid var(--v6-line);border-radius:15px;padding:17px;background:#fff;transition:.18s}
+.v6-tool:hover{transform:translateY(-2px);border-color:#bfdbfe;box-shadow:0 10px 24px rgba(15,23,42,.06)}
+.v6-tool b{display:block;margin-bottom:4px;color:#0f172a}
+.v6-badge{display:inline-flex;align-items:center;gap:6px;background:var(--v6-soft);color:#1d4ed8;border-radius:999px;padding:5px 10px;font-size:12px;font-weight:900}
+@media(max-width:750px){
+  header{padding:30px 0 20px!important}
+  header .logo{font-size:31px!important}
+  .nav{position:static;display:flex;overflow:auto;justify-content:flex-start}
+  .nav button{white-space:nowrap}
+  .card{padding:20px!important}
+  .price{font-size:34px!important}
+  .v6-tools{grid-template-columns:1fr}
+}
+.v5-dark{background:#0b1220!important;color:#f8fafc!important}
+.v5-dark header{background:#111827!important;border-color:#263244}
+.v5-dark .nav,.v5-dark .card,.v5-dark .v5-card,.v5-dark .stat,.v5-dark .history-item,.v5-dark details.v6-fold,.v5-dark .v6-tool{background:#111827!important;border-color:#334155!important}
+.v5-dark .v6-tool b,.v5-dark label,.v5-dark .section-title,.v5-dark h2,.v5-dark h3{color:#f8fafc!important}
+.v5-dark .v6-seo p,.v5-dark .v6-seo li{color:#cbd5e1!important}
 
 </style>
 </head>
@@ -890,6 +957,34 @@ footer{text-align:center;color:#94a3b8;font-size:12px;padding:8px 0 35px}
     </div>
 
   </div>
+</section>
+
+
+<section class="card v6-seo" id="seoGuide">
+  <span class="v6-badge">دليل التسعير لأصحاب المتاجر</span>
+  <h2>كيف تحدد سعر البيع المناسب لمنتجك؟</h2>
+  <p>سعّرها تساعدك على حساب سعر البيع بناءً على تكلفة المنتج والشحن والرسوم والمصاريف وهامش الربح، مع أدوات للخصومات والضريبة ونقطة التعادل وتحليل الربح التشغيلي.</p>
+
+  <div class="v6-tools">
+    <a class="v6-tool" href="#calculator"><b>حاسبة هامش الربح</b><span>احسب السعر المطلوب للوصول إلى هامش ربح محدد.</span></a>
+    <a class="v6-tool" href="#calculator"><b>حاسبة زيادة على التكلفة</b><span>احسب سعر البيع انطلاقًا من نسبة الزيادة على التكلفة.</span></a>
+    <a class="v6-tool" href="#result"><b>حاسبة الخصم</b><span>شاهد السعر قبل وبعد الخصم وتأثيره على الربح.</span></a>
+    <a class="v6-tool" href="#result"><b>نقطة التعادل</b><span>اعرف السعر الذي يغطي تكاليفك قبل تحقيق الربح.</span></a>
+    <a class="v6-tool" href="#merchantDashboard"><b>الربح التشغيلي</b><span>أدخل تكلفة الإعلان ونسبة المرتجعات للحصول على صورة أقرب للواقع.</span></a>
+    <a class="v6-tool" href="#multiProductSection"><b>عدة منتجات</b><span>احسب تكلفة سلة منتجات واحفظها للرجوع إليها.</span></a>
+  </div>
+
+  <details class="v6-fold">
+    <summary>أسئلة شائعة عن التسعير</summary>
+    <h3>ما الفرق بين هامش الربح والزيادة على التكلفة؟</h3>
+    <p>هامش الربح هو نسبة الربح من سعر البيع نفسه، بينما الزيادة على التكلفة تقيس الربح مقارنةً بتكلفة المنتج والتكاليف المرتبطة به.</p>
+    <h3>هل الرسوم تؤثر على السعر المقترح؟</h3>
+    <p>نعم. عندما تكون الرسوم نسبة من سعر البيع، يجب احتسابها داخل المعادلة حتى لا ينخفض الربح الفعلي عن الهدف.</p>
+    <h3>هل الخصم يقلل هامش الربح؟</h3>
+    <p>نعم غالبًا، لأن سعر البيع الفعلي ينخفض بينما بعض التكاليف تبقى ثابتة. استخدم جدول السيناريوهات لمقارنة أثر الخصم.</p>
+    <h3>هل السعر المقترح يعني أن السوق سيقبل السعر؟</h3>
+    <p>لا. الحاسبة تحدد السعر من ناحية التكاليف والربحية. قبول السوق يحتاج مقارنة المنافسين والقيمة المقدمة والطلب.</p>
+  </details>
 </section>
 
 </main>
@@ -2393,6 +2488,20 @@ document.addEventListener("DOMContentLoaded",()=>{
     setTimeout(updateDashboard,120);
   });
 })();
+</script>
+
+
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"WebApplication",
+  "name":"سعّرها",
+  "applicationCategory":"BusinessApplication",
+  "operatingSystem":"Web",
+  "inLanguage":"ar",
+  "description":"حاسبة تسعير للمتاجر تساعد على حساب سعر البيع والربح والخصومات والضريبة ونقطة التعادل.",
+  "offers":{"@type":"Offer","price":"0","priceCurrency":"SAR"}
+}
 </script>
 
 </body>
