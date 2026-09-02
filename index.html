@@ -314,6 +314,44 @@ footer{text-align:center;color:#94a3b8;font-size:12px;padding:8px 0 35px}
 .product-badge{display:inline-block;background:#eff6ff;color:#1d4ed8;border-radius:999px;padding:5px 10px;font-size:12px;font-weight:800;margin-bottom:10px}
 @media(max-width:750px){.v4-grid{grid-template-columns:1fr}}
 
+
+/* ===== V5: لوحة التاجر والتطويرات الإضافية ===== */
+.v5-section{margin-top:22px}
+.v5-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.v5-grid.two{grid-template-columns:repeat(2,1fr)}
+.v5-card{border:1px solid var(--border);border-radius:16px;padding:17px;background:#fff}
+.v5-card h3,.v5-card h4{margin:0 0 9px}
+.v5-card p{margin:0;color:var(--muted);font-size:13px;line-height:1.8}
+.v5-number{font-size:24px;font-weight:900;color:var(--blue-dark);margin-top:5px}
+.v5-kpi{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.v5-kpi .v5-card{text-align:center}
+.v5-input{margin-top:10px}
+.v5-table{min-width:850px}
+.v5-good{color:var(--green)!important;background:var(--green-bg)!important;border-color:#bbf7d0!important}
+.v5-warn{color:var(--orange)!important;background:var(--orange-bg)!important;border-color:#fed7aa!important}
+.v5-bad{color:var(--red)!important;background:var(--red-bg)!important;border-color:#fecaca!important}
+.v5-product-row{display:grid;grid-template-columns:2fr 1fr 1fr auto;gap:8px;margin-bottom:8px;align-items:center}
+.v5-product-row input{height:44px}
+.v5-remove{min-height:44px;padding:0 13px}
+.v5-toolbar{display:flex;gap:9px;flex-wrap:wrap}
+.v5-toolbar button{min-height:44px}
+.v5-progress{height:10px;background:#e5e7eb;border-radius:99px;overflow:hidden;margin-top:10px}
+.v5-progress span{display:block;height:100%;width:0;transition:.25s}
+.v5-pill{display:inline-block;padding:5px 10px;border-radius:999px;font-size:12px;font-weight:800;background:#eff6ff;color:#1d4ed8}
+.v5-muted{color:var(--muted);font-size:12px;line-height:1.7}
+.v5-dark{background:#111827!important;color:#f8fafc!important;border-color:#374151!important}
+.v5-dark .v5-card,.v5-dark .card,.v5-dark table,.v5-dark .nav button{background:#1f2937!important;color:#f8fafc!important;border-color:#374151!important}
+.v5-dark input,.v5-dark select{background:#111827!important;color:#f8fafc!important;border-color:#4b5563!important}
+.v5-dark th{background:#111827!important;color:#cbd5e1!important}
+.v5-dark .formula,.v5-dark .note,.v5-dark .help{background:#111827!important}
+.v5-dark .history-meta,.v5-dark .v5-muted,.v5-dark p{color:#cbd5e1!important}
+@media(max-width:750px){
+  .v5-grid,.v5-grid.two{grid-template-columns:1fr}
+  .v5-kpi{grid-template-columns:1fr 1fr}
+  .v5-product-row{grid-template-columns:1fr 1fr}
+  .v5-remove{grid-column:1/-1}
+}
+
 </style>
 </head>
 
@@ -688,6 +726,112 @@ footer{text-align:center;color:#94a3b8;font-size:12px;padding:8px 0 35px}
   <div class="subsection">
     <h3>فحص سريع للسعر</h3>
     <div id="priceHealthV4" class="note">احسب السعر لعرض تقييم الحسبة.</div>
+  </div>
+</section>
+
+
+<section class="card v5-section" id="merchantDashboard">
+  <h2 class="section-title">📊 لوحة التاجر</h2>
+  <p class="v5-muted">ملخص سريع مبني على الحسبة الحالية والتوقعات التي تدخلها.</p>
+
+  <div class="v5-kpi" style="margin-top:14px">
+    <div class="v5-card"><div class="v5-muted">سعر الطلب</div><div class="v5-number"><span id="v5DashPrice">0.00</span> ر.س</div></div>
+    <div class="v5-card"><div class="v5-muted">ربح الطلب</div><div class="v5-number"><span id="v5DashProfit">0.00</span> ر.س</div></div>
+    <div class="v5-card"><div class="v5-muted">عدد الطلبات</div><div class="v5-number"><span id="v5DashSales">0</span></div></div>
+    <div class="v5-card"><div class="v5-muted">ربح الشهر</div><div class="v5-number"><span id="v5DashMonthlyProfit">0.00</span> ر.س</div></div>
+  </div>
+
+  <div class="subsection">
+    <h3>🎯 هدف الربح الشهري</h3>
+    <div class="grid">
+      <div class="field">
+        <label for="v5ProfitGoal">الربح المستهدف شهريًا (ر.س)</label>
+        <input id="v5ProfitGoal" type="number" min="0" step="0.01" value="5000" placeholder="مثال: 5000">
+        <small>سيتم حساب عدد الطلبات المطلوبة بناءً على ربح الطلب الحالي.</small>
+      </div>
+      <div class="v5-card">
+        <div class="v5-muted">الطلبات المطلوبة لتحقيق الهدف</div>
+        <div class="v5-number"><span id="v5GoalOrders">0</span> طلب</div>
+        <div class="v5-muted" id="v5GoalText">احسب السعر أولًا.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <h3>📣 تأثير التسويق والمرتجعات</h3>
+    <div class="grid">
+      <div class="field">
+        <label for="v5AdCost">تكلفة الإعلان لكل طلب (ر.س)</label>
+        <input id="v5AdCost" type="number" min="0" step="0.01" value="0" placeholder="مثال: 8">
+        <small>تكلفة اكتساب الطلب الواحد من الإعلانات.</small>
+      </div>
+      <div class="field">
+        <label for="v5ReturnRate">نسبة الطلبات المرتجعة (%)</label>
+        <input id="v5ReturnRate" type="number" min="0" max="100" step="0.1" value="0" placeholder="مثال: 5">
+        <small>تقدير مبسط لتأثير المرتجعات على الربح.</small>
+      </div>
+    </div>
+
+    <div class="v5-grid" style="margin-top:12px">
+      <div class="v5-card"><div class="v5-muted">ربح الطلب بعد الإعلان</div><div class="v5-number"><span id="v5AfterAd">0.00</span> ر.س</div></div>
+      <div class="v5-card"><div class="v5-muted">الربح المتوقع بعد المرتجعات</div><div class="v5-number"><span id="v5AfterReturns">0.00</span> ر.س</div></div>
+      <div class="v5-card" id="v5RealProfitCard"><div class="v5-muted">الربح التشغيلي للطلب</div><div class="v5-number"><span id="v5RealProfit">0.00</span> ر.س</div></div>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <h3>🧮 سيناريوهات الربح</h3>
+    <div class="table-wrap">
+      <table class="v5-table">
+        <thead><tr><th>السيناريو</th><th>سعر العميل</th><th>الربح قبل التسويق</th><th>الربح بعد الإعلان</th><th>الهامش</th></tr></thead>
+        <tbody id="v5ScenarioBody">
+          <tr><td colspan="5" style="text-align:center;color:#64748b">احسب السعر أولًا.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="card v5-section" id="multiProductSection">
+  <h2 class="section-title">🛒 حاسبة سلة المنتجات</h2>
+  <p class="v5-muted">أضف عدة منتجات لمعرفة تكلفة السلة والربح الإجمالي عند بيعها كطلب واحد. الشحن والرسوم الثابتة من الحسبة الأساسية تُطبق على الطلب.</p>
+  <div id="v5Products"></div>
+  <div class="v5-toolbar">
+    <button type="button" class="secondary" id="v5AddProduct">+ إضافة منتج</button>
+    <button type="button" class="primary" id="v5CalcBasket">احسب السلة</button>
+    <button type="button" class="secondary" id="v5SaveBasket">حفظ السلة</button>
+  </div>
+  <div class="v5-grid" style="margin-top:14px">
+    <div class="v5-card"><div class="v5-muted">تكلفة المنتجات</div><div class="v5-number"><span id="v5BasketCost">0.00</span> ر.س</div></div>
+    <div class="v5-card"><div class="v5-muted">التكلفة الكاملة</div><div class="v5-number"><span id="v5BasketTotal">0.00</span> ر.س</div></div>
+    <div class="v5-card"><div class="v5-muted">سعر البيع المقترح</div><div class="v5-number"><span id="v5BasketPrice">0.00</span> ر.س</div></div>
+  </div>
+</section>
+
+<section class="card v5-section" id="savedProductsSection">
+  <h2 class="section-title">💾 المنتجات المحفوظة</h2>
+  <p class="v5-muted">حفظ محلي داخل المتصفح لتسهيل إعادة استخدام بيانات المنتجات.</p>
+  <div id="v5SavedProducts"><div class="history-empty">لا توجد منتجات محفوظة.</div></div>
+</section>
+
+<section class="card v5-section" id="reportSection">
+  <h2 class="section-title">📄 التقرير والمشاركة</h2>
+  <div class="v5-toolbar">
+    <button type="button" class="secondary" id="v5CopyFull">نسخ التقرير الكامل</button>
+    <button type="button" class="secondary" id="v5DownloadReport">تحميل التقرير TXT</button>
+    <button type="button" class="secondary" id="v5ShareLink">مشاركة برابط</button>
+    <button type="button" class="secondary" id="v5Theme">🌙 الوضع الداكن</button>
+  </div>
+  <div class="note" id="v5ReportStatus">احسب السعر أولًا لتكوين التقرير.</div>
+</section>
+
+<section class="card v5-section" id="faqSection">
+  <h2 class="section-title">❓ أسئلة شائعة</h2>
+  <div class="help-grid">
+    <div class="help-box"><h3>هل الربح بعد الإعلان هو الربح الحقيقي؟</h3><p>هو تقدير تشغيلي بعد خصم تكلفة الإعلان المدخلة، وليس محاسبة كاملة تشمل كل مصاريف المتجر.</p></div>
+    <div class="help-box"><h3>كيف أحسب هدف 5000 ريال؟</h3><p>أدخل الهدف، وستحسب الأداة عدد الطلبات المطلوبة اعتمادًا على ربح الطلب الحالي.</p></div>
+    <div class="help-box"><h3>هل المرتجعات محسوبة بدقة محاسبية؟</h3><p>لا. النسبة هنا تقدير مبسط للمقارنة، لأن تكلفة المرتجع الفعلية تختلف حسب الشحن والاسترداد والمنصة.</p></div>
+    <div class="help-box"><h3>هل البيانات تخرج من جهازي؟</h3><p>النسخة الحالية تعتمد على JavaScript وlocalStorage في المتصفح ولا تحتاج خادمًا للحسابات الأساسية.</p></div>
   </div>
 </section>
 
@@ -1977,6 +2121,277 @@ document.addEventListener("DOMContentLoaded",()=>{
     });
   };
 
+})();
+</script>
+
+
+<script>
+/* =========================================================
+   سعّرها V5 — تطويرات إضافية فوق النسخة الحالية
+   ========================================================= */
+(function(){
+  "use strict";
+  const q=id=>document.getElementById(id);
+  const n=id=>{
+    const e=q(id),v=e?parseFloat(e.value):0;
+    return Number.isFinite(v)?v:0;
+  };
+  const money=v=>Number.isFinite(v)?v.toFixed(2):"0.00";
+  const set=(id,v)=>{
+    const e=q(id);
+    if(e){
+      if("value" in e && (e.tagName==="INPUT" || e.tagName==="SELECT" || e.tagName==="TEXTAREA")) e.value=v;
+      else e.textContent=v;
+    }
+  };
+  const safeHistoryKey="sa3erhaSavedProductsV5";
+
+  function current(){
+    return window.lastResult || null;
+  }
+
+  function updateDashboard(){
+    const r=current();
+    if(!r){
+      ["v5DashPrice","v5DashProfit","v5DashMonthlyProfit","v5AfterAd","v5AfterReturns","v5RealProfit"].forEach(id=>set(id,"0.00"));
+      set("v5DashSales","0"); set("v5GoalOrders","0");
+      return;
+    }
+    const sales=n("monthlySales");
+    const ad=Math.max(0,n("v5AdCost"));
+    const returns=Math.min(100,Math.max(0,n("v5ReturnRate")));
+    const profit=Number(r.profit)||0;
+    const afterAd=profit-ad;
+    const afterReturns=afterAd*(1-returns/100);
+    const realProfit=afterReturns;
+
+    set("v5DashPrice",money(r.displayedPrice));
+    set("v5DashProfit",money(profit));
+    set("v5DashSales",String(Math.max(0,Math.floor(sales))));
+    set("v5DashMonthlyProfit",money(realProfit*sales));
+    set("v5AfterAd",money(afterAd));
+    set("v5AfterReturns",money(afterReturns));
+    set("v5RealProfit",money(realProfit));
+
+    const goal=Math.max(0,n("v5ProfitGoal"));
+    const needed=realProfit>0 ? Math.ceil(goal/realProfit) : 0;
+    set("v5GoalOrders",String(needed));
+    set("v5GoalText",realProfit>0
+      ? "لتحقيق "+money(goal)+" ر.س تحتاج تقريبًا إلى "+needed+" طلب شهريًا."
+      : "لا يمكن تحديد عدد الطلبات لأن الربح التشغيلي للطلب غير موجب.");
+
+    const card=q("v5RealProfitCard");
+    if(card){
+      card.classList.remove("v5-good","v5-warn","v5-bad");
+      card.classList.add(realProfit>0?"v5-good":realProfit<0?"v5-bad":"v5-warn");
+    }
+
+    const body=q("v5ScenarioBody");
+    if(body){
+      body.innerHTML="";
+      const scenarios=[
+        ["السعر المحافظ",Number(r.lowPrice)||0],
+        ["السعر المقترح",Number(r.commercialPrice)||0],
+        ["سعر ربح أعلى",Number(r.highPrice)||0]
+      ];
+      scenarios.forEach(row=>{
+        const price=row[1], fee=price*(Number(r.paymentFee)||0)/100;
+        const p=price-(Number(r.total)||0)-fee;
+        const pa=p-ad;
+        const m=price>0?p/price*100:0;
+        const tr=document.createElement("tr");
+        tr.innerHTML="<td>"+row[0]+"</td><td>"+money(price)+" ر.س</td><td>"+money(p)+" ر.س</td><td>"+money(pa)+" ر.س</td><td>"+money(m)+"%</td>";
+        body.appendChild(tr);
+      });
+    }
+  }
+
+  function reportText(){
+    const r=current();
+    if(!r) return "";
+    const sales=n("monthlySales");
+    const ad=n("v5AdCost");
+    const returns=n("v5ReturnRate");
+    const operational=(Number(r.profit)-ad)*(1-returns/100);
+    return [
+      "سعّرها — تقرير الحسبة",
+      r.productName ? "المنتج: "+r.productName : "",
+      "سعر البيع: "+money(r.displayedPrice)+" ر.س",
+      "السعر قبل الضريبة: "+money(r.commercialPrice)+" ر.س",
+      "إجمالي التكلفة: "+money(r.total)+" ر.س",
+      "رسوم الدفع: "+money(r.payment)+" ر.س",
+      "الربح الصافي: "+money(r.profit)+" ر.س",
+      "هامش الربح: "+money(r.actualMargin)+"%",
+      "نقطة التعادل: "+money(r.breakEven)+" ر.س",
+      "المبيعات الشهرية المتوقعة: "+Math.max(0,Math.floor(sales)),
+      "الإيراد الشهري المتوقع: "+money(Number(r.commercialPrice)*sales)+" ر.س",
+      "الربح التشغيلي بعد الإعلان والمرتجعات: "+money(operational)+" ر.س لكل طلب",
+      "الربح الشهري التشغيلي التقديري: "+money(operational*sales)+" ر.س"
+    ].filter(Boolean).join("\n");
+  }
+
+  function copyFull(){
+    const text=reportText();
+    if(!text){alert("احسب سعر البيع أولًا.");return;}
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(()=>{
+        const b=q("v5CopyFull"); if(b){const old=b.textContent;b.textContent="تم النسخ ✓";setTimeout(()=>b.textContent=old,1500);}
+      }).catch(()=>prompt("انسخ التقرير:",text));
+    }else prompt("انسخ التقرير:",text);
+  }
+
+  function downloadReport(){
+    const text=reportText();
+    if(!text){alert("احسب سعر البيع أولًا.");return;}
+    const blob=new Blob([text],{type:"text/plain;charset=utf-8"});
+    const a=document.createElement("a");
+    a.href=URL.createObjectURL(blob);
+    a.download="sa3erha-report.txt";
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(()=>URL.revokeObjectURL(a.href),1000);
+  }
+
+  function shareLink(){
+    const r=current();
+    if(!r){alert("احسب سعر البيع أولًا.");return;}
+    try{
+      const params=new URLSearchParams({
+        productCost:r.productCost,
+        shipping:r.shipping,
+        fixedFees:r.fixedFees,
+        paymentFee:r.paymentFee,
+        profitTarget:r.profitTarget,
+        otherCosts:r.otherCosts,
+        taxRate:r.taxRate,
+        taxMode:r.taxMode,
+        quantity:r.quantity||1,
+        roundingMode:r.roundingMode||"none",
+        monthlySales:r.monthlySales||0,
+        productName:r.productName||"",
+        mode:r.mode||"margin"
+      });
+      const url=location.href.split("#")[0].split("?")[0]+"?"+params.toString();
+      if(navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(url).then(()=>set("v5ReportStatus","تم نسخ رابط المشاركة ✓")).catch(()=>prompt("انسخ الرابط:",url));
+      }else prompt("انسخ الرابط:",url);
+    }catch(e){ alert("تعذر إنشاء رابط المشاركة."); }
+  }
+
+  function loadFromUrl(){
+    try{
+      const p=new URLSearchParams(location.search);
+      if(!p.has("productCost")) return;
+      const ids=["productCost","shipping","fixedFees","paymentFee","profitMargin","otherCosts","taxRate","taxMode","quantity","roundingMode","monthlySales","productName"];
+      ids.forEach(id=>{if(p.has(id)) set(id,p.get(id));});
+      if(p.has("mode") && typeof window.setMode==="function") window.setMode(p.get("mode"));
+      setTimeout(()=>{
+        const b=q("calculateBtn"); if(b) b.click();
+      },80);
+    }catch(e){}
+  }
+
+  function addProduct(data){
+    const wrap=q("v5Products"); if(!wrap) return;
+    const row=document.createElement("div"); row.className="v5-product-row";
+    row.innerHTML='<input type="text" placeholder="اسم المنتج"><input type="number" min="0" step="0.01" placeholder="التكلفة"><input type="number" min="1" step="1" value="1" placeholder="الكمية"><button type="button" class="secondary v5-remove">حذف</button>';
+    const inputs=row.querySelectorAll("input");
+    if(data){inputs[0].value=data.name||"";inputs[1].value=data.cost??"";inputs[2].value=data.qty??1;}
+    row.querySelector(".v5-remove").addEventListener("click",()=>row.remove());
+    wrap.appendChild(row);
+  }
+
+  function basket(){
+    const wrap=q("v5Products"); if(!wrap) return;
+    const rows=[...wrap.querySelectorAll(".v5-product-row")];
+    let productCost=0, valid=0;
+    rows.forEach(row=>{
+      const ins=row.querySelectorAll("input");
+      const cost=parseFloat(ins[1].value),qty=parseInt(ins[2].value,10);
+      if(Number.isFinite(cost)&&cost>=0&&Number.isInteger(qty)&&qty>0){productCost+=cost*qty;valid++;}
+    });
+    const r=current();
+    const shipping=r?Number(r.shipping)||0:n("shipping");
+    const fixed=r?Number(r.fixedFees)||0:n("fixedFees");
+    const other=r?Number(r.otherCosts)||0:n("otherCosts");
+    const fee=r?Number(r.paymentFee)||0:n("paymentFee");
+    const target=r?Number(r.profitTarget)||0:n("profitMargin");
+    const total=productCost+shipping+fixed+other;
+    let price=0;
+    if(typeof window.setMode==="function" && r && r.mode==="markup"){
+      price=fee<100 ? total*(1+target/100)/(1-fee/100) : 0;
+    }else{
+      const den=1-fee/100-target/100;
+      price=den>0?total/den:0;
+    }
+    set("v5BasketCost",money(productCost));
+    set("v5BasketTotal",money(total));
+    set("v5BasketPrice",money(price));
+    set("v5ReportStatus",valid+" منتج صالح في السلة.");
+  }
+
+  function saveProducts(){
+    const wrap=q("v5Products"); if(!wrap)return;
+    const rows=[...wrap.querySelectorAll(".v5-product-row")].map(row=>{
+      const i=row.querySelectorAll("input");
+      return {name:i[0].value.trim(),cost:parseFloat(i[1].value)||0,qty:parseInt(i[2].value,10)||1};
+    }).filter(x=>x.name||x.cost>0);
+    try{localStorage.setItem(safeHistoryKey,JSON.stringify(rows));renderSaved();set("v5ReportStatus","تم حفظ المنتجات ✓");}catch(e){alert("تعذر حفظ المنتجات.");}
+  }
+
+  function renderSaved(){
+    const box=q("v5SavedProducts"); if(!box)return;
+    let rows=[]; try{rows=JSON.parse(localStorage.getItem(safeHistoryKey)||"[]");}catch(e){}
+    if(!Array.isArray(rows)||!rows.length){box.innerHTML='<div class="history-empty">لا توجد منتجات محفوظة.</div>';return;}
+    box.innerHTML="";
+    rows.forEach((item,index)=>{
+      const div=document.createElement("div");div.className="history-item";
+      const main=document.createElement("div");main.className="history-main";
+      const title=document.createElement("div");title.className="history-title";title.textContent=item.name||"منتج بدون اسم";
+      const meta=document.createElement("div");meta.className="history-meta";meta.textContent="التكلفة: "+money(item.cost)+" ر.س • الكمية: "+item.qty;
+      main.append(title,meta);
+      const actions=document.createElement("div");actions.className="history-actions";
+      const use=document.createElement("button");use.className="small-btn";use.textContent="إضافة للسلة";use.addEventListener("click",()=>addProduct(item));
+      const del=document.createElement("button");del.className="small-btn danger";del.textContent="حذف";del.addEventListener("click",()=>{rows.splice(index,1);localStorage.setItem(safeHistoryKey,JSON.stringify(rows));renderSaved();});
+      actions.append(use,del);div.append(main,actions);box.appendChild(div);
+    });
+  }
+
+  function toggleTheme(){
+    document.body.classList.toggle("v5-dark");
+    const dark=document.body.classList.contains("v5-dark");
+    try{localStorage.setItem("sa3erhaThemeV5",dark?"dark":"light");}catch(e){}
+    set("v5Theme",dark?"☀️ الوضع الفاتح":"🌙 الوضع الداكن");
+  }
+
+  function restoreTheme(){
+    try{
+      if(localStorage.getItem("sa3erhaThemeV5")==="dark") document.body.classList.add("v5-dark");
+      set("v5Theme",document.body.classList.contains("v5-dark")?"☀️ الوضع الفاتح":"🌙 الوضع الداكن");
+    }catch(e){}
+  }
+
+  document.addEventListener("DOMContentLoaded",function(){
+    const calc=q("calculateBtn");
+    if(calc) calc.addEventListener("click",()=>setTimeout(updateDashboard,20));
+
+    ["monthlySales","v5ProfitGoal","v5AdCost","v5ReturnRate"].forEach(id=>{
+      const e=q(id); if(e) e.addEventListener("input",updateDashboard);
+    });
+
+    const add=q("v5AddProduct"); if(add) add.addEventListener("click",()=>addProduct());
+    const cb=q("v5CalcBasket"); if(cb) cb.addEventListener("click",basket);
+    const sb=q("v5SaveBasket"); if(sb) sb.addEventListener("click",saveProducts);
+    const cp=q("v5CopyFull"); if(cp) cp.addEventListener("click",copyFull);
+    const dl=q("v5DownloadReport"); if(dl) dl.addEventListener("click",downloadReport);
+    const sl=q("v5ShareLink"); if(sl) sl.addEventListener("click",shareLink);
+    const th=q("v5Theme"); if(th) th.addEventListener("click",toggleTheme);
+
+    addProduct();
+    renderSaved();
+    restoreTheme();
+    loadFromUrl();
+    setTimeout(updateDashboard,120);
+  });
 })();
 </script>
 
