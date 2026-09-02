@@ -353,6 +353,18 @@ footer{text-align:center;color:#94a3b8;font-size:12px;padding:8px 0 35px}
   .v5-remove{grid-column:1/-1}
 }
 
+
+/* ===== V10: تنظيم الواجهة ===== */
+.nav{gap:7px!important}
+.nav button{font-size:13px!important;padding:9px 13px!important}
+.v10-section-label{display:inline-flex;align-items:center;gap:7px;margin:0 0 12px;padding:6px 10px;border-radius:999px;background:#eff6ff;color:#1d4ed8;font-size:12px;font-weight:900}
+.v10-divider{height:1px;background:var(--v6-line);margin:8px 0 26px}
+@media(max-width:750px){
+  .nav{padding:7px!important}
+  .nav button{font-size:12px!important;padding:8px 11px!important}
+}
+.v5-dark .v10-section-label{background:#172554;color:#bfdbfe}
+
 </style>
 <style>
 
@@ -488,16 +500,20 @@ details.v6-fold[open] summary:after{content:"−"}
 </header>
 
 <div class="container">
-  <nav class="nav">
-    <button type="button" onclick="scrollToSection('calculator')">الحاسبة</button>
-    <button type="button" onclick="scrollToSection('historySection')">سجل الحسبات</button>
-    <button type="button" onclick="scrollToSection('helpSection')">كيف تعمل؟</button>
+  <nav class="nav" aria-label="التنقل في سعّرها">
+    <button type="button" onclick="scrollToSection('calculator')">🧮 الحاسبة</button>
+    <button type="button" onclick="scrollToSection('result')">📌 النتيجة</button>
+    <button type="button" onclick="scrollToSection('merchantDashboard')">📊 لوحة التاجر</button>
+    <button type="button" onclick="scrollToSection('smartPricingSection')">🎯 تحليل السعر</button>
+    <button type="button" onclick="scrollToSection('multiProductSection')">🛒 المنتجات</button>
+    <button type="button" onclick="scrollToSection('historySection')">🕘 السجل</button>
+    <button type="button" onclick="scrollToSection('reportSection')">📄 التقارير</button>
+    <button type="button" onclick="scrollToSection('helpSection')">💡 كيف تعمل؟</button>
+    <button type="button" onclick="scrollToSection('faqSection')">❓ الأسئلة</button>
   </nav>
 </div>
 
-<main class="container">
-
-<section class="card" id="calculator">
+<main class="container"><section class="card" id="calculator">
   <h2 class="section-title">حاسبة السعر</h2>
 
   <div class="tabs">
@@ -600,7 +616,6 @@ details.v6-fold[open] summary:after{content:"−"}
     <button type="button" class="secondary" id="resetBtn">مسح</button>
   </div>
 </section>
-
 
 <section id="result" class="card result">
 
@@ -773,96 +788,6 @@ details.v6-fold[open] summary:after{content:"−"}
 
 </section>
 
-
-<section class="card" id="historySection">
-  <h2 class="section-title">سجل الحسبات</h2>
-
-  <div id="historyList">
-    <div class="history-empty">لا توجد حسبات محفوظة حتى الآن.</div>
-  </div>
-
-  <button type="button" class="secondary" id="clearHistoryBtn" style="margin-top:13px;width:100%">
-    حذف سجل الحسبات
-  </button>
-</section>
-
-
-
-<section class="card v4-tools" id="advancedSection">
-  <h2 class="section-title">🚀 أدوات إضافية للتاجر</h2>
-
-  <div id="v4ProductBadge" class="product-badge hidden"></div>
-
-  <div class="subsection">
-    <h3>مقارنة الخصومات</h3>
-    <div class="table-wrap">
-      <table class="scenario-table">
-        <thead>
-          <tr>
-            <th>الخصم</th>
-            <th>سعر العميل قبل الضريبة</th>
-            <th>سعر العميل شامل الضريبة</th>
-            <th>رسوم الدفع</th>
-            <th>الربح الصافي</th>
-            <th>الهامش الفعلي</th>
-          </tr>
-        </thead>
-        <tbody id="discountScenarioBody">
-          <tr><td colspan="6" style="text-align:center;color:#64748b">احسب السعر أولًا.</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-
-  <div class="subsection">
-    <h3>التوقعات الشهرية</h3>
-    <div class="v4-grid">
-      <div class="v4-card">
-        <h4>الإيراد الشهري المتوقع</h4>
-        <div class="v4-value"><span id="monthlyRevenue">0.00</span> ر.س</div>
-        <div class="v4-muted">حسب عدد الطلبات الشهرية وسعر العميل.</div>
-      </div>
-      <div class="v4-card">
-        <h4>التكاليف الشهرية المتوقعة</h4>
-        <div class="v4-value"><span id="monthlyCosts">0.00</span> ر.س</div>
-        <div class="v4-muted">تكلفة المنتجات والشحن والرسوم والتكاليف الأخرى.</div>
-      </div>
-      <div class="v4-card">
-        <h4>الربح الشهري المتوقع</h4>
-        <div class="v4-value"><span id="monthlyProfit">0.00</span> ر.س</div>
-        <div class="v4-muted">بعد احتساب رسوم الدفع.</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="subsection">
-    <h3>السعر الدقيق والسعر التجاري</h3>
-    <div class="v4-grid">
-      <div class="v4-card">
-        <h4>السعر الدقيق للحسبة</h4>
-        <div class="v4-value"><span id="exactPriceV4">0.00</span> ر.س</div>
-        <div class="v4-muted">هذا السعر يطابق المعادلة قبل أي تقريب تجاري.</div>
-      </div>
-      <div class="v4-card">
-        <h4>السعر التجاري المقترح</h4>
-        <div class="v4-value"><span id="commercialPriceV4">0.00</span> ر.س</div>
-        <div class="v4-muted">السعر الذي سيظهر في الحسبة الأساسية عند اختيار التقريب.</div>
-      </div>
-      <div class="v4-card" id="roundingStatusCard">
-        <h4>أثر التقريب</h4>
-        <div class="v4-value"><span id="roundingDifferenceV4">0.00</span> ر.س</div>
-        <div class="v4-muted">إذا خفّض التقريب السعر فقد ينخفض الهامش عن الهدف.</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="subsection">
-    <h3>فحص سريع للسعر</h3>
-    <div id="priceHealthV4" class="note">احسب السعر لعرض تقييم الحسبة.</div>
-  </div>
-</section>
-
-
 <section class="card v5-section" id="merchantDashboard">
   <h2 class="section-title">📊 لوحة التاجر</h2>
   <p class="v5-muted">ملخص سريع مبني على الحسبة الحالية والتوقعات التي تدخلها.</p>
@@ -974,7 +899,6 @@ details.v6-fold[open] summary:after{content:"−"}
   <div class="note" id="smartPricingNote">أدخل متوسط سعر المنافسين وعدد المبيعات الشهرية ثم احسب السعر لعرض التحليل.</div>
 </section>
 
-
 <section class="card v5-section" id="psychologicalPricingSection">
   <h2 class="section-title">💰 التسعير النفسي</h2>
   <p class="v5-muted">يعرض لك أسعارًا قريبة من سعرك الحالي بصيغ شائعة مثل 49.90 و49.99 و50، ثم يقارن الربح والهامش لكل خيار.</p>
@@ -1007,6 +931,80 @@ details.v6-fold[open] summary:after{content:"−"}
   <div class="v9-price-note" id="advancedDiscountNote">سيظهر التحليل بعد حساب السعر.</div>
 </section>
 
+<section class="card v4-tools" id="advancedSection">
+  <h2 class="section-title">🚀 أدوات إضافية للتاجر</h2>
+
+  <div id="v4ProductBadge" class="product-badge hidden"></div>
+
+  <div class="subsection">
+    <h3>مقارنة الخصومات</h3>
+    <div class="table-wrap">
+      <table class="scenario-table">
+        <thead>
+          <tr>
+            <th>الخصم</th>
+            <th>سعر العميل قبل الضريبة</th>
+            <th>سعر العميل شامل الضريبة</th>
+            <th>رسوم الدفع</th>
+            <th>الربح الصافي</th>
+            <th>الهامش الفعلي</th>
+          </tr>
+        </thead>
+        <tbody id="discountScenarioBody">
+          <tr><td colspan="6" style="text-align:center;color:#64748b">احسب السعر أولًا.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <h3>التوقعات الشهرية</h3>
+    <div class="v4-grid">
+      <div class="v4-card">
+        <h4>الإيراد الشهري المتوقع</h4>
+        <div class="v4-value"><span id="monthlyRevenue">0.00</span> ر.س</div>
+        <div class="v4-muted">حسب عدد الطلبات الشهرية وسعر العميل.</div>
+      </div>
+      <div class="v4-card">
+        <h4>التكاليف الشهرية المتوقعة</h4>
+        <div class="v4-value"><span id="monthlyCosts">0.00</span> ر.س</div>
+        <div class="v4-muted">تكلفة المنتجات والشحن والرسوم والتكاليف الأخرى.</div>
+      </div>
+      <div class="v4-card">
+        <h4>الربح الشهري المتوقع</h4>
+        <div class="v4-value"><span id="monthlyProfit">0.00</span> ر.س</div>
+        <div class="v4-muted">بعد احتساب رسوم الدفع.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <h3>السعر الدقيق والسعر التجاري</h3>
+    <div class="v4-grid">
+      <div class="v4-card">
+        <h4>السعر الدقيق للحسبة</h4>
+        <div class="v4-value"><span id="exactPriceV4">0.00</span> ر.س</div>
+        <div class="v4-muted">هذا السعر يطابق المعادلة قبل أي تقريب تجاري.</div>
+      </div>
+      <div class="v4-card">
+        <h4>السعر التجاري المقترح</h4>
+        <div class="v4-value"><span id="commercialPriceV4">0.00</span> ر.س</div>
+        <div class="v4-muted">السعر الذي سيظهر في الحسبة الأساسية عند اختيار التقريب.</div>
+      </div>
+      <div class="v4-card" id="roundingStatusCard">
+        <h4>أثر التقريب</h4>
+        <div class="v4-value"><span id="roundingDifferenceV4">0.00</span> ر.س</div>
+        <div class="v4-muted">إذا خفّض التقريب السعر فقد ينخفض الهامش عن الهدف.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <h3>فحص سريع للسعر</h3>
+    <div id="priceHealthV4" class="note">احسب السعر لعرض تقييم الحسبة.</div>
+  </div>
+</section>
+
 <section class="card v5-section" id="multiProductSection">
   <h2 class="section-title">🛒 حاسبة سلة المنتجات</h2>
   <p class="v5-muted">أضف عدة منتجات لمعرفة تكلفة السلة والربح الإجمالي عند بيعها كطلب واحد. الشحن والرسوم الثابتة من الحسبة الأساسية تُطبق على الطلب.</p>
@@ -1030,6 +1028,18 @@ details.v6-fold[open] summary:after{content:"−"}
   <div id="v5SavedProducts"><div class="history-empty">لا توجد منتجات محفوظة.</div></div>
 </section>
 
+<section class="card" id="historySection">
+  <h2 class="section-title">سجل الحسبات</h2>
+
+  <div id="historyList">
+    <div class="history-empty">لا توجد حسبات محفوظة حتى الآن.</div>
+  </div>
+
+  <button type="button" class="secondary" id="clearHistoryBtn" style="margin-top:13px;width:100%">
+    حذف سجل الحسبات
+  </button>
+</section>
+
 <section class="card v5-section" id="reportSection">
   <h2 class="section-title">📄 التقرير والمشاركة</h2>
   <div class="v5-toolbar">
@@ -1039,16 +1049,6 @@ details.v6-fold[open] summary:after{content:"−"}
     <button type="button" class="secondary hidden" id="v5Theme">🌙 الوضع الداكن</button>
   </div>
   <div class="note" id="v5ReportStatus">احسب السعر أولًا لتكوين التقرير.</div>
-</section>
-
-<section class="card v5-section" id="faqSection">
-  <h2 class="section-title">❓ أسئلة شائعة</h2>
-  <div class="help-grid">
-    <div class="help-box"><h3>هل الربح بعد الإعلان هو الربح الحقيقي؟</h3><p>هو تقدير تشغيلي بعد خصم تكلفة الإعلان المدخلة، وليس محاسبة كاملة تشمل كل مصاريف المتجر.</p></div>
-    <div class="help-box"><h3>كيف أحسب هدف 5000 ريال؟</h3><p>أدخل الهدف، وستحسب الأداة عدد الطلبات المطلوبة اعتمادًا على ربح الطلب الحالي.</p></div>
-    <div class="help-box"><h3>هل المرتجعات محسوبة بدقة محاسبية؟</h3><p>لا. النسبة هنا تقدير مبسط للمقارنة، لأن تكلفة المرتجع الفعلية تختلف حسب الشحن والاسترداد والمنصة.</p></div>
-    <div class="help-box"><h3>هل البيانات تخرج من جهازي؟</h3><p>النسخة الحالية تعتمد على JavaScript وlocalStorage في المتصفح ولا تحتاج خادمًا للحسابات الأساسية.</p></div>
-  </div>
 </section>
 
 <section class="card" id="helpSection">
@@ -1108,6 +1108,15 @@ details.v6-fold[open] summary:after{content:"−"}
   </div>
 </section>
 
+<section class="card v5-section" id="faqSection">
+  <h2 class="section-title">❓ أسئلة شائعة</h2>
+  <div class="help-grid">
+    <div class="help-box"><h3>هل الربح بعد الإعلان هو الربح الحقيقي؟</h3><p>هو تقدير تشغيلي بعد خصم تكلفة الإعلان المدخلة، وليس محاسبة كاملة تشمل كل مصاريف المتجر.</p></div>
+    <div class="help-box"><h3>كيف أحسب هدف 5000 ريال؟</h3><p>أدخل الهدف، وستحسب الأداة عدد الطلبات المطلوبة اعتمادًا على ربح الطلب الحالي.</p></div>
+    <div class="help-box"><h3>هل المرتجعات محسوبة بدقة محاسبية؟</h3><p>لا. النسبة هنا تقدير مبسط للمقارنة، لأن تكلفة المرتجع الفعلية تختلف حسب الشحن والاسترداد والمنصة.</p></div>
+    <div class="help-box"><h3>هل البيانات تخرج من جهازي؟</h3><p>النسخة الحالية تعتمد على JavaScript وlocalStorage في المتصفح ولا تحتاج خادمًا للحسابات الأساسية.</p></div>
+  </div>
+</section>
 
 <section class="card v6-seo" id="seoGuide">
   <span class="v6-badge">دليل التسعير لأصحاب المتاجر</span>
@@ -1134,9 +1143,7 @@ details.v6-fold[open] summary:after{content:"−"}
     <h3>هل السعر المقترح يعني أن السوق سيقبل السعر؟</h3>
     <p>لا. الحاسبة تحدد السعر من ناحية التكاليف والربحية. قبول السوق يحتاج مقارنة المنافسين والقيمة المقدمة والطلب.</p>
   </details>
-</section>
-
-</main>
+</section></main>
 
 <footer>
   سعّرها — حاسبة بسيطة وواضحة لأصحاب المتاجر.
