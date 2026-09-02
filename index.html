@@ -419,6 +419,22 @@ details.v6-fold[open] summary:after{content:"−"}
 .v5-dark .v6-tool b,.v5-dark label,.v5-dark .section-title,.v5-dark h2,.v5-dark h3{color:#f8fafc!important}
 .v5-dark .v6-seo p,.v5-dark .v6-seo li{color:#cbd5e1!important}
 
+
+/* ===== V7: وضوح الضريبة والأسعار + تحسينات التاجر ===== */
+.tax-pair{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:14px}
+.tax-pair>div{background:#fff;border:1px solid #dbeafe;border-radius:12px;padding:9px 13px;color:#334155;font-size:13px}
+.tax-tag{display:inline-block;background:#eff6ff;color:#1d4ed8;border-radius:999px;padding:3px 8px;font-weight:900;font-size:11px}
+.tax-tag.inclusive{background:#f0fdf4;color:#15803d}
+.tax-sub{margin-top:7px;color:#64748b;font-size:12px;line-height:1.6}
+.tax-sub strong{color:#15803d}
+.suggestion .tax-sub{border-top:1px dashed #e2e8f0;padding-top:7px}
+.v5-tax-summary{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
+.v5-tax-summary>div{border:1px solid var(--v6-line);border-radius:14px;padding:13px 15px;background:#fff;display:flex;justify-content:space-between;gap:12px;align-items:center}
+.v5-tax-summary span{color:var(--muted);font-size:12px}
+.v5-tax-summary strong{font-size:16px;color:var(--blue-dark)}
+.v5-dark .tax-pair>div,.v5-dark .v5-tax-summary>div{background:#111827;border-color:#334155;color:#e2e8f0}
+.v5-dark .tax-sub{color:#cbd5e1}
+@media(max-width:750px){.v5-tax-summary{grid-template-columns:1fr}.tax-pair{flex-direction:column}.tax-pair>div{width:100%}}
 </style>
 </head>
 
@@ -496,10 +512,11 @@ details.v6-fold[open] summary:after{content:"−"}
     <div class="field">
       <label for="taxMode">طريقة عرض الضريبة</label>
       <select id="taxMode">
-        <option value="exclusive">السعر المقترح قبل الضريبة</option>
-        <option value="inclusive">السعر المقترح شامل الضريبة</option>
+        <option value="both" selected>عرض السعر قبل الضريبة وشامل الضريبة</option>
+        <option value="exclusive">عرض السعر قبل الضريبة فقط</option>
+        <option value="inclusive">عرض السعر شامل الضريبة فقط</option>
       </select>
-      <small>الضريبة المعروضة لا تغيّر تكلفة المنتج أو هامش الربح الأساسي.</small>
+      <small>يفضل عرض السعرين معًا: قبل الضريبة للتسعير والربحية، وشامل الضريبة لمعرفة المبلغ الذي سيدفعه العميل.</small>
     </div>
 
     <div class="field">
@@ -553,6 +570,10 @@ details.v6-fold[open] summary:after{content:"−"}
       <span id="sellingPrice">0.00</span>
       <span class="currency">ر.س</span>
     </div>
+    <div class="tax-pair" id="mainTaxPair">
+      <div><span class="tax-tag">قبل الضريبة</span> <strong id="mainPriceBeforeTax">0.00</strong> ر.س</div>
+      <div><span class="tax-tag inclusive">شامل الضريبة</span> <strong id="mainPriceWithTax">0.00</strong> ر.س</div>
+    </div>
   </div>
 
   <div id="profitStatus" class="status good">الحسبة جاهزة.</div>
@@ -570,7 +591,7 @@ details.v6-fold[open] summary:after{content:"−"}
     </div>
 
     <div class="stat good">
-      <div class="label">الربح الصافي</div>
+      <div class="label">الربح الصافي (قبل الضريبة)</div>
       <div class="value"><span id="netProfit">0.00</span> ر.س</div>
     </div>
 
@@ -619,24 +640,24 @@ details.v6-fold[open] summary:after{content:"−"}
 
 
   <div class="subsection">
-    <h3>اقتراحات أسعار</h3>
+    <h3>اقتراحات أسعار <span class="v6-badge">قبل الضريبة + شامل الضريبة</span></h3>
 
     <div class="suggestions">
       <div class="suggestion">
         <div class="tag">سعر محافظ</div>
-        <div class="sprice"><span id="suggestLow">0.00</span> ر.س</div>
+        <div class="sprice"><span id="suggestLow">0.00</span> ر.س</div><div class="tax-sub">شامل الضريبة: <strong id="suggestLowTax">0.00</strong> ر.س</div>
         <small>سعر أقل نسبيًا، مناسب إذا كانت المنافسة السعرية قوية.</small>
       </div>
 
       <div class="suggestion">
         <div class="tag">السعر المقترح</div>
-        <div class="sprice"><span id="suggestNormal">0.00</span> ر.س</div>
+        <div class="sprice"><span id="suggestNormal">0.00</span> ر.س</div><div class="tax-sub">شامل الضريبة: <strong id="suggestNormalTax">0.00</strong> ر.س</div>
         <small>السعر الناتج من الحسبة الأساسية.</small>
       </div>
 
       <div class="suggestion">
         <div class="tag">سعر ربح أعلى</div>
-        <div class="sprice"><span id="suggestHigh">0.00</span> ر.س</div>
+        <div class="sprice"><span id="suggestHigh">0.00</span> ر.س</div><div class="tax-sub">شامل الضريبة: <strong id="suggestHighTax">0.00</strong> ر.س</div>
         <small>سعر أعلى يعطي هامش ربح أكبر قبل الضريبة.</small>
       </div>
     </div>
@@ -649,21 +670,24 @@ details.v6-fold[open] summary:after{content:"−"}
     <div class="extra-grid">
 
       <div class="extra-card">
-        <div class="title">نقطة التعادل</div>
+        <div class="title">نقطة التعادل (قبل الضريبة)</div>
         <div class="big"><span id="breakEven">0.00</span> ر.س</div>
+        <div class="tax-sub">شامل الضريبة: <strong id="breakEvenTax">0.00</strong> ر.س</div>
         <small>السعر الذي يغطي التكاليف والرسوم النسبية بدون ربح.</small>
       </div>
 
       <div class="extra-card">
-        <div class="title">سعر بعد خصم 10%</div>
+        <div class="title">سعر بعد خصم 10% (قبل الضريبة)</div>
         <div class="big"><span id="discount10">0.00</span> ر.س</div>
-        <small>المبلغ الذي سيدفعه العميل بعد خصم 10% من السعر المقترح قبل الضريبة.</small>
+        <div class="tax-sub">شامل الضريبة: <strong id="discount10Tax">0.00</strong> ر.س</div>
+        <small>السعر بعد الخصم محسوب من سعر البيع قبل الضريبة.</small>
       </div>
 
       <div class="extra-card">
-        <div class="title">سعر بعد خصم 20%</div>
+        <div class="title">سعر بعد خصم 20% (قبل الضريبة)</div>
         <div class="big"><span id="discount20">0.00</span> ر.س</div>
-        <small>المبلغ الذي سيدفعه العميل بعد خصم 20% من السعر المقترح قبل الضريبة.</small>
+        <div class="tax-sub">شامل الضريبة: <strong id="discount20Tax">0.00</strong> ر.س</div>
+        <small>السعر بعد الخصم محسوب من سعر البيع قبل الضريبة.</small>
       </div>
 
     </div>
@@ -682,9 +706,10 @@ details.v6-fold[open] summary:after{content:"−"}
       </div>
 
       <div class="field">
-        <label>السعر المطلوب قبل الخصم</label>
+        <label>السعر المطلوب قبل الخصم (قبل الضريبة)</label>
         <input id="priceBeforeDiscount" type="text" value="0.00 ر.س" readonly>
-        <small>هذا السعر يجعل السعر بعد الخصم مساويًا لسعر البيع المحسوب.</small>
+        <div class="tax-sub">شامل الضريبة: <strong id="priceBeforeDiscountTax">0.00</strong> ر.س</div>
+        <small>هذا السعر يجعل السعر بعد الخصم مساويًا للسعر المستهدف قبل الضريبة. ويظهر أدناه أيضًا شامل الضريبة.</small>
       </div>
 
     </div>
@@ -703,7 +728,7 @@ details.v6-fold[open] summary:after{content:"−"}
   </div>
 
   <div class="note">
-    الضريبة معروضة بشكل منفصل حتى تكون الحسبة واضحة. رسوم الدفع محسوبة على سعر البيع قبل الضريبة.
+    الضريبة معروضة بشكل منفصل حتى تكون الحسبة واضحة. السعر قبل الضريبة هو الأساس المستخدم في الربحية، بينما السعر شامل الضريبة يوضح المبلغ النهائي للعميل. رسوم الدفع محسوبة على سعر البيع قبل الضريبة.
   </div>
 
 </section>
@@ -736,13 +761,14 @@ details.v6-fold[open] summary:after{content:"−"}
           <tr>
             <th>الخصم</th>
             <th>سعر العميل قبل الضريبة</th>
+            <th>سعر العميل شامل الضريبة</th>
             <th>رسوم الدفع</th>
             <th>الربح الصافي</th>
             <th>الهامش الفعلي</th>
           </tr>
         </thead>
         <tbody id="discountScenarioBody">
-          <tr><td colspan="5" style="text-align:center;color:#64748b">احسب السعر أولًا.</td></tr>
+          <tr><td colspan="6" style="text-align:center;color:#64748b">احسب السعر أولًا.</td></tr>
         </tbody>
       </table>
     </div>
@@ -802,10 +828,14 @@ details.v6-fold[open] summary:after{content:"−"}
   <p class="v5-muted">ملخص سريع مبني على الحسبة الحالية والتوقعات التي تدخلها.</p>
 
   <div class="v5-kpi" style="margin-top:14px">
-    <div class="v5-card"><div class="v5-muted">سعر الطلب</div><div class="v5-number"><span id="v5DashPrice">0.00</span> ر.س</div></div>
-    <div class="v5-card"><div class="v5-muted">ربح الطلب</div><div class="v5-number"><span id="v5DashProfit">0.00</span> ر.س</div></div>
+    <div class="v5-card"><div class="v5-muted">سعر الطلب قبل الضريبة</div><div class="v5-number"><span id="v5DashPrice">0.00</span> ر.س</div></div>
+    <div class="v5-card"><div class="v5-muted">ربح الطلب (قبل الضريبة)</div><div class="v5-number"><span id="v5DashProfit">0.00</span> ر.س</div></div>
     <div class="v5-card"><div class="v5-muted">عدد الطلبات</div><div class="v5-number"><span id="v5DashSales">0</span></div></div>
-    <div class="v5-card"><div class="v5-muted">ربح الشهر</div><div class="v5-number"><span id="v5DashMonthlyProfit">0.00</span> ر.س</div></div>
+    <div class="v5-card"><div class="v5-muted">ربح الشهر (قبل الضريبة)</div><div class="v5-number"><span id="v5DashMonthlyProfit">0.00</span> ر.س</div></div>
+  </div>
+  <div class="v5-tax-summary">
+    <div><span>سعر الطلب قبل الضريبة</span><strong id="v5DashPriceBeforeTax">0.00 ر.س</strong></div>
+    <div><span>سعر الطلب شامل الضريبة</span><strong id="v5DashPriceWithTax">0.00 ر.س</strong></div>
   </div>
 
   <div class="subsection">
@@ -850,9 +880,9 @@ details.v6-fold[open] summary:after{content:"−"}
     <h3>🧮 سيناريوهات الربح</h3>
     <div class="table-wrap">
       <table class="v5-table">
-        <thead><tr><th>السيناريو</th><th>سعر العميل</th><th>الربح قبل التسويق</th><th>الربح بعد الإعلان</th><th>الهامش</th></tr></thead>
+        <thead><tr><th>السيناريو</th><th>السعر قبل الضريبة</th><th>السعر شامل الضريبة</th><th>الربح قبل التسويق</th><th>الربح بعد الإعلان</th><th>الهامش</th></tr></thead>
         <tbody id="v5ScenarioBody">
-          <tr><td colspan="5" style="text-align:center;color:#64748b">احسب السعر أولًا.</td></tr>
+          <tr><td colspan="6" style="text-align:center;color:#64748b">احسب السعر أولًا.</td></tr>
         </tbody>
       </table>
     </div>
@@ -871,7 +901,8 @@ details.v6-fold[open] summary:after{content:"−"}
   <div class="v5-grid" style="margin-top:14px">
     <div class="v5-card"><div class="v5-muted">تكلفة المنتجات</div><div class="v5-number"><span id="v5BasketCost">0.00</span> ر.س</div></div>
     <div class="v5-card"><div class="v5-muted">التكلفة الكاملة</div><div class="v5-number"><span id="v5BasketTotal">0.00</span> ر.س</div></div>
-    <div class="v5-card"><div class="v5-muted">سعر البيع المقترح</div><div class="v5-number"><span id="v5BasketPrice">0.00</span> ر.س</div></div>
+    <div class="v5-card"><div class="v5-muted">سعر البيع المقترح قبل الضريبة</div><div class="v5-number"><span id="v5BasketPrice">0.00</span> ر.س</div></div>
+    <div class="v5-card"><div class="v5-muted">سعر البيع شامل الضريبة</div><div class="v5-number"><span id="v5BasketPriceWithTax">0.00</span> ر.س</div></div>
   </div>
 </section>
 
@@ -1725,6 +1756,7 @@ document.addEventListener("DOMContentLoaded",()=>{
 
     discounts.forEach(discount=>{
       const customerPrice=r.commercialPrice*(1-discount/100);
+      const customerPriceWithTax=customerPrice*(1+(Number(r.taxRate)||0)/100);
       const payment=customerPrice*r.paymentFee/100;
       const profit=customerPrice-r.total;
       const netProfit=profit-payment;
@@ -1898,6 +1930,8 @@ document.addEventListener("DOMContentLoaded",()=>{
       };
 
       v4Text("sellingPrice",v4Money(displayedPrice));
+      v4Text("mainPriceBeforeTax",v4Money(commercialPrice));
+      v4Text("mainPriceWithTax",v4Money(priceWithTax));
       v4Text("totalCost",v4Money(total));
       v4Text("paymentAmount",v4Money(payment));
       v4Text("netProfit",v4Money(profit));
@@ -1916,22 +1950,32 @@ document.addEventListener("DOMContentLoaded",()=>{
       v4Text("tableActualMargin",v4Money(actualMargin)+"%");
 
       v4Text("suggestLow",v4Money(lowPrice));
-      v4Text("suggestNormal",v4Money(exactPrice));
+      v4Text("suggestLowTax",v4Money(lowPrice*(1+tax/100)));
+      v4Text("suggestNormal",v4Money(commercialPrice));
+      v4Text("suggestNormalTax",v4Money(commercialPrice*(1+tax/100)));
       v4Text("suggestHigh",v4Money(highPrice));
+      v4Text("suggestHighTax",v4Money(highPrice*(1+tax/100)));
       v4Text("breakEven",v4Money(breakEven));
+      v4Text("breakEvenTax",v4Money(breakEven*(1+tax/100)));
       v4Text("discount10",v4Money(commercialPrice*0.90));
+      v4Text("discount10Tax",v4Money(commercialPrice*0.90*(1+tax/100)));
       v4Text("discount20",v4Money(commercialPrice*0.80));
+      v4Text("discount20Tax",v4Money(commercialPrice*0.80*(1+tax/100)));
 
       const discountRate=v4Num("discountRate",20);
       if(discountRate>=0 && discountRate<100){
-        v4Value("priceBeforeDiscount",v4Money(commercialPrice/(1-discountRate/100))+" ر.س");
+        const beforeDiscount=commercialPrice/(1-discountRate/100);
+        v4Value("priceBeforeDiscount",v4Money(beforeDiscount)+" ر.س");
+        v4Text("priceBeforeDiscountTax",v4Money(beforeDiscount*(1+tax/100))+" ر.س");
       }
 
       const priceLabel=v4El("priceLabel");
       if(priceLabel){
         priceLabel.textContent=taxMode==="inclusive"
           ? "سعر البيع المقترح شامل الضريبة"
-          : "سعر البيع المقترح قبل الضريبة";
+          : taxMode==="exclusive"
+            ? "سعر البيع المقترح قبل الضريبة"
+            : "سعر البيع المقترح — السعران ظاهرين";
       }
 
       if(typeof updateStatus==="function") updateStatus(profit,actualMargin);
@@ -1962,6 +2006,8 @@ document.addEventListener("DOMContentLoaded",()=>{
       name.trim(),
       "سعر البيع المقترح: "+v4Money(r.displayedPrice)+" ر.س",
       "السعر قبل الضريبة: "+v4Money(r.commercialPrice)+" ر.س",
+      "السعر شامل الضريبة: "+v4Money(r.priceWithTax)+" ر.س",
+      "السعر قبل الضريبة: "+v4Money(r.commercialPrice)+" ر.س",
       "السعر الدقيق: "+v4Money(r.priceBeforeTaxExact)+" ر.س",
       "الكمية في الطلب: "+r.quantity,
       "إجمالي التكلفة: "+v4Money(r.total)+" ر.س",
@@ -1990,7 +2036,7 @@ document.addEventListener("DOMContentLoaded",()=>{
       v4Value("profitMargin",item.profitTarget??20);
       v4Value("otherCosts",item.otherCosts??0);
       v4Value("taxRate",item.taxRate??15);
-      v4Value("taxMode",item.taxMode??"exclusive");
+      v4Value("taxMode",item.taxMode??"both");
       v4Value("quantity",item.quantity??1);
       v4Value("roundingMode",item.roundingMode??"none");
       v4Value("monthlySales",item.monthlySales??0);
@@ -2011,7 +2057,7 @@ document.addEventListener("DOMContentLoaded",()=>{
     v4Value("profitMargin","20");
     v4Value("otherCosts","0");
     v4Value("taxRate","15");
-    v4Value("taxMode","exclusive");
+    v4Value("taxMode","both");
     v4Value("quantity","1");
     v4Value("roundingMode","none");
     v4Value("monthlySales","0");
@@ -2248,7 +2294,7 @@ document.addEventListener("DOMContentLoaded",()=>{
   function updateDashboard(){
     const r=current();
     if(!r){
-      ["v5DashPrice","v5DashProfit","v5DashMonthlyProfit","v5AfterAd","v5AfterReturns","v5RealProfit"].forEach(id=>set(id,"0.00"));
+      ["v5DashPrice","v5DashPriceBeforeTax","v5DashPriceWithTax","v5DashProfit","v5DashMonthlyProfit","v5AfterAd","v5AfterReturns","v5RealProfit"].forEach(id=>set(id,"0.00"));
       set("v5DashSales","0"); set("v5GoalOrders","0");
       return;
     }
@@ -2260,7 +2306,9 @@ document.addEventListener("DOMContentLoaded",()=>{
     const afterReturns=afterAd*(1-returns/100);
     const realProfit=afterReturns;
 
-    set("v5DashPrice",money(r.displayedPrice));
+    set("v5DashPrice",money(r.commercialPrice));
+    set("v5DashPriceBeforeTax",money(r.commercialPrice)+" ر.س");
+    set("v5DashPriceWithTax",money(r.priceWithTax)+" ر.س");
     set("v5DashProfit",money(profit));
     set("v5DashSales",String(Math.max(0,Math.floor(sales))));
     set("v5DashMonthlyProfit",money(realProfit*sales));
@@ -2295,7 +2343,8 @@ document.addEventListener("DOMContentLoaded",()=>{
         const pa=p-ad;
         const m=price>0?p/price*100:0;
         const tr=document.createElement("tr");
-        tr.innerHTML="<td>"+row[0]+"</td><td>"+money(price)+" ر.س</td><td>"+money(p)+" ر.س</td><td>"+money(pa)+" ر.س</td><td>"+money(m)+"%</td>";
+        const taxPrice=price*(1+(Number(r.taxRate)||0)/100);
+        tr.innerHTML="<td>"+row[0]+"</td><td>"+money(price)+" ر.س</td><td>"+money(taxPrice)+" ر.س</td><td>"+money(p)+" ر.س</td><td>"+money(pa)+" ر.س</td><td>"+money(m)+"%</td>";
         body.appendChild(tr);
       });
     }
@@ -2474,7 +2523,14 @@ document.addEventListener("DOMContentLoaded",()=>{
     });
 
     const add=q("v5AddProduct"); if(add) add.addEventListener("click",()=>addProduct());
-    const cb=q("v5CalcBasket"); if(cb) cb.addEventListener("click",basket);
+    const cb=q("v5CalcBasket"); if(cb) cb.addEventListener("click",()=>{
+      basket();
+      setTimeout(()=>{
+        const r=current();
+        const base=parseFloat(q("v5BasketPrice")?.textContent)||0;
+        set("v5BasketPriceWithTax",money(base*(1+(r?Number(r.taxRate)||0:n("taxRate"))/100)));
+      },10);
+    });
     const sb=q("v5SaveBasket"); if(sb) sb.addEventListener("click",saveProducts);
     const cp=q("v5CopyFull"); if(cp) cp.addEventListener("click",copyFull);
     const dl=q("v5DownloadReport"); if(dl) dl.addEventListener("click",downloadReport);
