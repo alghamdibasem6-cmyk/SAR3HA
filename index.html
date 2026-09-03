@@ -497,6 +497,47 @@ details.v6-fold[open] summary:after{content:"−"}
 .v5-dark .v9-price-note{background:#0f172a}
 @media(max-width:900px){.v9-price-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.v9-dashboard-grid{grid-template-columns:1fr 1fr}}
 @media(max-width:600px){.v9-price-grid,.v9-dashboard-grid{grid-template-columns:1fr}}
+
+/* ===== سعّرها: تنظيم احترافي V12 ===== */
+.sa-main{padding-bottom:10px}
+.sa-group{margin:0 0 34px}
+.sa-group.sa-last{margin-bottom:8px}
+.sa-group-head{display:flex;align-items:center;gap:12px;margin:0 3px 14px}
+.sa-group-head>span{display:grid;place-items:center;flex:0 0 42px;width:42px;height:42px;border-radius:13px;background:#eff6ff;font-size:20px}
+.sa-group-head strong{display:block;font-size:19px;line-height:1.35}
+.sa-group-head small{display:block;color:var(--muted);font-size:12px;line-height:1.55;margin-top:2px}
+.sa-stack{display:grid;gap:14px}
+.sa-stack>.card{margin-bottom:0}
+details.sa-fold{border:1px solid var(--v6-line);border-radius:18px;background:#fff;overflow:hidden;box-shadow:0 8px 22px rgba(15,23,42,.035)}
+details.sa-fold summary{list-style:none;cursor:pointer;padding:17px 19px;font-weight:900;font-size:15px;display:flex;align-items:center;gap:8px}
+details.sa-fold summary::-webkit-details-marker{display:none}
+details.sa-fold summary:after{content:"＋";margin-right:auto;color:var(--v6-primary);font-size:20px}
+details.sa-fold[open] summary:after{content:"−"}
+details.sa-fold summary small{font-weight:600;color:var(--muted);font-size:11px}
+.sa-fold-body{padding:0 14px 14px}
+.sa-fold-body>.card{margin-bottom:0}
+.sa-core .result{border-color:#bfdbfe;box-shadow:0 14px 35px rgba(37,99,235,.08)!important}
+.sa-core .result .price-box{padding:28px 20px}
+.sa-core .result .price{font-size:46px!important}
+.sa-core .result .actions{position:sticky;bottom:10px;z-index:5;background:rgba(255,255,255,.94);padding:8px;border:1px solid var(--v6-line);border-radius:14px;backdrop-filter:blur(10px)}
+.sa-group .section-title{display:flex;align-items:center;gap:8px}
+.sa-group .section-title:after{content:"";display:block;height:4px;width:34px;border-radius:99px;background:var(--v6-primary);opacity:.2}
+.v5-dark details.sa-fold{background:#111827;border-color:#334155}
+.v5-dark details.sa-fold summary{color:#f8fafc}
+.v5-dark details.sa-fold summary small,.v5-dark .sa-group-head small{color:#cbd5e1}
+.v5-dark .sa-group-head strong{color:#f8fafc}
+.v5-dark .sa-group-head>span{background:#172554}
+.v5-dark .sa-core .result .actions{background:rgba(17,24,39,.94);border-color:#334155}
+@media(max-width:750px){
+  .sa-group{margin-bottom:27px}
+  .sa-group-head{align-items:flex-start}
+  .sa-group-head>span{flex-basis:38px;width:38px;height:38px;font-size:18px}
+  .sa-group-head strong{font-size:17px}
+  .sa-group-head small{font-size:11px}
+  .sa-core .result .price{font-size:37px!important}
+  details.sa-fold summary{padding:15px}
+  .sa-fold-body{padding:0 8px 8px}
+}
 </style>
 
 </head>
@@ -515,18 +556,22 @@ details.v6-fold[open] summary:after{content:"−"}
 <div class="container">
   <nav class="nav" aria-label="التنقل في سعّرها">
   <button type="button" onclick="scrollToSection('calculator')">🧮 الحسبة</button>
-  <button type="button" onclick="scrollToSection('merchantDashboard')">📊 التاجر</button>
-  <button type="button" onclick="scrollToSection('smartPricingSection')">🎯 تحليل السعر</button>
+  <button type="button" onclick="scrollToSection('result')">🎯 النتيجة</button>
+  <button type="button" onclick="scrollToSection('smartPricingSection')">📊 تحليل السعر</button>
   <button type="button" onclick="scrollToSection('advancedDiscountSection')">🏷️ الخصومات</button>
+  <button type="button" onclick="scrollToSection('merchantDashboard')">📈 لوحة التاجر</button>
   <button type="button" onclick="scrollToSection('multiProductSection')">🛒 المنتجات</button>
-  <button type="button" onclick="scrollToSection('historySection')">🕘 السجل</button>
   <button type="button" onclick="scrollToSection('reportSection')">📄 التقارير</button>
   <button type="button" onclick="scrollToSection('helpSection')">💡 المساعدة</button>
 </nav>
 </div>
 
-<main class="container"><div class="site-group"><div class="site-group-title"><span>🧮</span><div><strong>الحسبة والنتيجة</strong><small>قسم منظم من أدوات سعّرها</small></div></div>
-<section class="card" id="calculator">
+<main class="container sa-main">
+
+  <div class="sa-group sa-core">
+    <div class="sa-group-head"><span>🧮</span><div><strong>الحسبة والنتيجة</strong><small>ابدأ من هنا: أدخل بيانات المنتج ثم راجع السعر والربح.</small></div></div>
+    <div class="sa-stack">
+      <section class="card" id="calculator">
   <h2 class="section-title">حاسبة السعر</h2>
 
   <div class="tabs">
@@ -629,8 +674,7 @@ details.v6-fold[open] summary:after{content:"−"}
     <button type="button" class="secondary" id="resetBtn">مسح</button>
   </div>
 </section>
-
-<section id="result" class="card result">
+      <section id="result" class="card result">
 
   <div class="price-box">
     <div class="price-label" id="priceLabel">سعر البيع المقترح</div>
@@ -800,9 +844,63 @@ details.v6-fold[open] summary:after{content:"−"}
   </div>
 
 </section>
-</div>
-<div class="site-group"><div class="site-group-title"><span>📊</span><div><strong>تحليل السعر والربحية</strong><small>قسم منظم من أدوات سعّرها</small></div></div>
-<section class="card v5-section" id="merchantDashboard">
+    </div>
+  </div>
+
+  <div class="sa-group">
+    <div class="sa-group-head"><span>📊</span><div><strong>تحليل السعر والربحية</strong><small>افهم هل سعرك مناسب للسوق وكم يمكن أن تحقق من ربح.</small></div></div>
+    <div class="sa-stack">
+      <section class="card v5-section" id="smartPricingSection">
+  <h2 class="section-title">🎯 تحليل التسعير الذكي</h2>
+  <p class="v5-muted">تطوير مختصر يساعدك تقارن سعرك بالسوق وتحسب الربح الشهري بعد المصاريف الثابتة.</p>
+
+  <div class="grid" style="margin-top:14px">
+    <div class="field">
+      <label for="marketPrice">متوسط سعر المنافسين (ر.س)</label>
+      <input id="marketPrice" type="number" min="0" step="0.01" placeholder="مثال: 129">
+      <small>أدخل متوسط أسعار المنافسين إذا كان لديك.</small>
+    </div>
+
+    <div class="field">
+      <label for="monthlyFixedCosts">المصاريف الثابتة الشهرية (ر.س)</label>
+      <input id="monthlyFixedCosts" type="number" min="0" step="0.01" value="0" placeholder="مثال: 2000">
+      <small>إيجار، اشتراكات، رواتب أو أي مصاريف شهرية ثابتة.</small>
+    </div>
+  </div>
+
+  <div class="v5-grid" style="margin-top:12px">
+    <div class="v5-card">
+      <div class="v5-muted">موقع سعرك مقارنة بالمنافسين</div>
+      <div class="v5-number" id="marketPosition">احسب السعر أولًا</div>
+    </div>
+    <div class="v5-card">
+      <div class="v5-muted">الربح الشهري بعد المصاريف الثابتة</div>
+      <div class="v5-number"><span id="monthlyProfitAfterFixed">0.00</span> ر.س</div>
+    </div>
+    <div class="v5-card">
+      <div class="v5-muted">المصاريف الثابتة لكل طلب</div>
+      <div class="v5-number"><span id="fixedCostPerOrder">0.00</span> ر.س</div>
+    </div>
+  </div>
+
+  <div class="note" id="smartPricingNote">أدخل متوسط سعر المنافسين وعدد المبيعات الشهرية ثم احسب السعر لعرض التحليل.</div>
+</section>
+      <section class="card v5-section" id="psychologicalPricingSection">
+  <h2 class="section-title">💰 التسعير النفسي</h2>
+  <p class="v5-muted">يعرض لك أسعارًا قريبة من سعرك الحالي بصيغ شائعة مثل 49.90 و49.99 و50، ثم يقارن الربح والهامش لكل خيار.</p>
+  <div class="grid" style="margin-top:14px">
+    <div class="field">
+      <label for="psychBasePrice">السعر الذي تريد تحليله (ر.س)</label>
+      <input id="psychBasePrice" type="number" min="0" step="0.01" placeholder="مثال: 100">
+      <small>إذا تركته فارغًا، سيستخدم سعر الحسبة الحالية قبل الضريبة.</small>
+    </div>
+  </div>
+  <div class="v9-price-grid" id="psychPricingResults">
+    <div class="v9-price-card"><span class="v9-tag">قريب</span><strong>—</strong><div class="v9-mini">احسب السعر أولًا.</div></div>
+  </div>
+  <div class="v9-price-note" id="psychPricingNote">اختر السعر أو احسب المنتج أولًا لعرض المقارنة.</div>
+</section>
+      <section class="card v5-section" id="merchantDashboard">
   <h2 class="section-title">📊 لوحة التاجر</h2>
   <p class="v5-muted">ملخص سريع مبني على الحسبة الحالية والتوقعات التي تدخلها.</p>
 
@@ -876,61 +974,13 @@ details.v6-fold[open] summary:after{content:"−"}
     </div>
   </div>
 </section>
-
-<section class="card v5-section" id="smartPricingSection">
-  <h2 class="section-title">🎯 تحليل التسعير الذكي</h2>
-  <p class="v5-muted">تطوير مختصر يساعدك تقارن سعرك بالسوق وتحسب الربح الشهري بعد المصاريف الثابتة.</p>
-
-  <div class="grid" style="margin-top:14px">
-    <div class="field">
-      <label for="marketPrice">متوسط سعر المنافسين (ر.س)</label>
-      <input id="marketPrice" type="number" min="0" step="0.01" placeholder="مثال: 129">
-      <small>أدخل متوسط أسعار المنافسين إذا كان لديك.</small>
-    </div>
-
-    <div class="field">
-      <label for="monthlyFixedCosts">المصاريف الثابتة الشهرية (ر.س)</label>
-      <input id="monthlyFixedCosts" type="number" min="0" step="0.01" value="0" placeholder="مثال: 2000">
-      <small>إيجار، اشتراكات، رواتب أو أي مصاريف شهرية ثابتة.</small>
     </div>
   </div>
 
-  <div class="v5-grid" style="margin-top:12px">
-    <div class="v5-card">
-      <div class="v5-muted">موقع سعرك مقارنة بالمنافسين</div>
-      <div class="v5-number" id="marketPosition">احسب السعر أولًا</div>
-    </div>
-    <div class="v5-card">
-      <div class="v5-muted">الربح الشهري بعد المصاريف الثابتة</div>
-      <div class="v5-number"><span id="monthlyProfitAfterFixed">0.00</span> ر.س</div>
-    </div>
-    <div class="v5-card">
-      <div class="v5-muted">المصاريف الثابتة لكل طلب</div>
-      <div class="v5-number"><span id="fixedCostPerOrder">0.00</span> ر.س</div>
-    </div>
-  </div>
-
-  <div class="note" id="smartPricingNote">أدخل متوسط سعر المنافسين وعدد المبيعات الشهرية ثم احسب السعر لعرض التحليل.</div>
-</section>
-
-<section class="card v5-section" id="psychologicalPricingSection">
-  <h2 class="section-title">💰 التسعير النفسي</h2>
-  <p class="v5-muted">يعرض لك أسعارًا قريبة من سعرك الحالي بصيغ شائعة مثل 49.90 و49.99 و50، ثم يقارن الربح والهامش لكل خيار.</p>
-  <div class="grid" style="margin-top:14px">
-    <div class="field">
-      <label for="psychBasePrice">السعر الذي تريد تحليله (ر.س)</label>
-      <input id="psychBasePrice" type="number" min="0" step="0.01" placeholder="مثال: 100">
-      <small>إذا تركته فارغًا، سيستخدم سعر الحسبة الحالية قبل الضريبة.</small>
-    </div>
-  </div>
-  <div class="v9-price-grid" id="psychPricingResults">
-    <div class="v9-price-card"><span class="v9-tag">قريب</span><strong>—</strong><div class="v9-mini">احسب السعر أولًا.</div></div>
-  </div>
-  <div class="v9-price-note" id="psychPricingNote">اختر السعر أو احسب المنتج أولًا لعرض المقارنة.</div>
-</section>
-</div>
-<div class="site-group"><div class="site-group-title"><span>🏷️</span><div><strong>الخصومات والأدوات الإضافية</strong><small>قسم منظم من أدوات سعّرها</small></div></div>
-<section class="card v5-section" id="advancedDiscountSection">
+  <div class="sa-group">
+    <div class="sa-group-head"><span>🏷️</span><div><strong>الخصومات والأدوات الإضافية</strong><small>حلّل الخصم قبل تطبيقه واعرف أثره على الربحية.</small></div></div>
+    <div class="sa-stack">
+      <section class="card v5-section" id="advancedDiscountSection">
   <h2 class="section-title">🏷️ تحليل الخصم المتقدم</h2>
   <p class="v5-muted">شوف تأثير الخصم على سعر العميل والربح والهامش، وكم يجب أن ترفع السعر الأصلي حتى يبقى ربحك المستهدف كما هو.</p>
   <div class="grid" style="margin-top:14px">
@@ -945,8 +995,9 @@ details.v6-fold[open] summary:after{content:"−"}
   </div>
   <div class="v9-price-note" id="advancedDiscountNote">سيظهر التحليل بعد حساب السعر.</div>
 </section>
-
-<section class="card v4-tools" id="advancedSection">
+      <details class="sa-fold">
+        <summary>🚀 أدوات إضافية للتاجر <small>مقارنة الخصومات والتوقعات والأسعار التجارية</small></summary>
+        <div class="sa-fold-body"><section class="card v4-tools" id="advancedSection">
   <h2 class="section-title">🚀 أدوات إضافية للتاجر</h2>
 
   <div id="v4ProductBadge" class="product-badge hidden"></div>
@@ -1018,10 +1069,15 @@ details.v6-fold[open] summary:after{content:"−"}
     <h3>فحص سريع للسعر</h3>
     <div id="priceHealthV4" class="note">احسب السعر لعرض تقييم الحسبة.</div>
   </div>
-</section>
-</div>
-<div class="site-group"><div class="site-group-title"><span>🛒</span><div><strong>المنتجات والحسابات المحفوظة</strong><small>قسم منظم من أدوات سعّرها</small></div></div>
-<section class="card v5-section" id="multiProductSection">
+</section></div>
+      </details>
+    </div>
+  </div>
+
+  <div class="sa-group">
+    <div class="sa-group-head"><span>🛒</span><div><strong>إدارة المنتجات والحسابات</strong><small>احسب أكثر من منتج، احفظ المنتجات، وارجع للحسبات السابقة.</small></div></div>
+    <div class="sa-stack">
+      <section class="card v5-section" id="multiProductSection">
   <h2 class="section-title">🛒 حاسبة سلة المنتجات</h2>
   <p class="v5-muted">أضف عدة منتجات لمعرفة تكلفة السلة والربح الإجمالي عند بيعها كطلب واحد. الشحن والرسوم الثابتة من الحسبة الأساسية تُطبق على الطلب.</p>
   <div id="v5Products"></div>
@@ -1037,14 +1093,17 @@ details.v6-fold[open] summary:after{content:"−"}
     <div class="v5-card"><div class="v5-muted">سعر البيع شامل الضريبة</div><div class="v5-number"><span id="v5BasketPriceWithTax">0.00</span> ر.س</div></div>
   </div>
 </section>
-
-<section class="card v5-section" id="savedProductsSection">
+      <details class="sa-fold">
+        <summary>💾 المنتجات المحفوظة <small>فتح وإدارة المنتجات التي حفظتها</small></summary>
+        <div class="sa-fold-body"><section class="card v5-section" id="savedProductsSection">
   <h2 class="section-title">💾 المنتجات المحفوظة</h2>
   <p class="v5-muted">حفظ محلي داخل المتصفح لتسهيل إعادة استخدام بيانات المنتجات.</p>
   <div id="v5SavedProducts"><div class="history-empty">لا توجد منتجات محفوظة.</div></div>
-</section>
-
-<section class="card" id="historySection">
+</section></div>
+      </details>
+      <details class="sa-fold">
+        <summary>🕘 سجل الحسبات <small>مراجعة الحسبات السابقة واسترجاعها</small></summary>
+        <div class="sa-fold-body"><section class="card" id="historySection">
   <h2 class="section-title">سجل الحسبات</h2>
 
   <div id="historyList">
@@ -1054,10 +1113,15 @@ details.v6-fold[open] summary:after{content:"−"}
   <button type="button" class="secondary" id="clearHistoryBtn" style="margin-top:13px;width:100%">
     حذف سجل الحسبات
   </button>
-</section>
-</div>
-<div class="site-group"><div class="site-group-title"><span>📄</span><div><strong>التقارير والمساعدة</strong><small>قسم منظم من أدوات سعّرها</small></div></div>
-<section class="card v5-section" id="reportSection">
+</section></div>
+      </details>
+    </div>
+  </div>
+
+  <div class="sa-group">
+    <div class="sa-group-head"><span>📄</span><div><strong>التقارير والمساعدة</strong><small>شارك الحسبة، اقرأ الشرح، ثم ارجع لدليل التسعير عند الحاجة.</small></div></div>
+    <div class="sa-stack">
+      <section class="card v5-section" id="reportSection">
   <h2 class="section-title">📄 التقرير والمشاركة</h2>
   <div class="v5-toolbar">
     <button type="button" class="secondary" id="v5CopyFull">نسخ التقرير الكامل</button>
@@ -1067,8 +1131,9 @@ details.v6-fold[open] summary:after{content:"−"}
   </div>
   <div class="note" id="v5ReportStatus">احسب السعر أولًا لتكوين التقرير.</div>
 </section>
-
-<section class="card" id="helpSection">
+      <details class="sa-fold">
+        <summary>💡 المساعدة والأسئلة الشائعة <small>شرح الأدوات والإجابات السريعة</small></summary>
+        <div class="sa-fold-body"><section class="card" id="helpSection">
   <h2 class="section-title">كيف تعمل «سعّرها»؟</h2>
 
   <div class="help-grid">
@@ -1123,9 +1188,7 @@ details.v6-fold[open] summary:after{content:"−"}
     </div>
 
   </div>
-</section>
-
-<section class="card v5-section" id="faqSection">
+</section><section class="card v5-section" id="faqSection">
   <h2 class="section-title">❓ أسئلة شائعة</h2>
   <div class="help-grid">
     <div class="help-box"><h3>هل الربح بعد الإعلان هو الربح الحقيقي؟</h3><p>هو تقدير تشغيلي بعد خصم تكلفة الإعلان المدخلة، وليس محاسبة كاملة تشمل كل مصاريف المتجر.</p></div>
@@ -1133,10 +1196,16 @@ details.v6-fold[open] summary:after{content:"−"}
     <div class="help-box"><h3>هل المرتجعات محسوبة بدقة محاسبية؟</h3><p>لا. النسبة هنا تقدير مبسط للمقارنة، لأن تكلفة المرتجع الفعلية تختلف حسب الشحن والاسترداد والمنصة.</p></div>
     <div class="help-box"><h3>هل البيانات تخرج من جهازي؟</h3><p>النسخة الحالية تعتمد على JavaScript وlocalStorage في المتصفح ولا تحتاج خادمًا للحسابات الأساسية.</p></div>
   </div>
-</section>
-</div>
-<div class="site-group"><div class="site-group-title"><span>📚</span><div><strong>دليل التسعير</strong><small>قسم منظم من أدوات سعّرها</small></div></div>
-<section class="card v6-seo" id="seoGuide">
+</section></div>
+      </details>
+    </div>
+  </div>
+
+  <div class="sa-group sa-last">
+    <div class="sa-group-head"><span>📚</span><div><strong>دليل التسعير</strong><small>محتوى إضافي لفهم التسعير والربحية.</small></div></div>
+    <details class="sa-fold">
+      <summary>📚 فتح دليل التسعير <small>المعلومات الإضافية</small></summary>
+      <div class="sa-fold-body"><section class="card v6-seo" id="seoGuide">
   <span class="v6-badge">دليل التسعير لأصحاب المتاجر</span>
   <h2>كيف تحدد سعر البيع المناسب لمنتجك؟</h2>
   <p>سعّرها تساعدك على حساب سعر البيع بناءً على تكلفة المنتج والشحن والرسوم والمصاريف وهامش الربح، مع أدوات للخصومات والضريبة ونقطة التعادل وتحليل الربح التشغيلي.</p>
@@ -1161,8 +1230,11 @@ details.v6-fold[open] summary:after{content:"−"}
     <h3>هل السعر المقترح يعني أن السوق سيقبل السعر؟</h3>
     <p>لا. الحاسبة تحدد السعر من ناحية التكاليف والربحية. قبول السوق يحتاج مقارنة المنافسين والقيمة المقدمة والطلب.</p>
   </details>
-</section>
-</div></main>
+</section></div>
+    </details>
+  </div>
+
+</main>
 
 <footer>
   سعّرها — حاسبة بسيطة وواضحة لأصحاب المتاجر.
@@ -1215,7 +1287,10 @@ function hideError(){
 
 function scrollToSection(id){
   const el=getEl(id);
-  if(el) el.scrollIntoView({behavior:"smooth",block:"start"});
+  if(!el) return;
+  const fold=el.closest("details.sa-fold");
+  if(fold) fold.open=true;
+  setTimeout(()=>el.scrollIntoView({behavior:"smooth",block:"start"}),40);
 }
 
 function setMode(mode){
