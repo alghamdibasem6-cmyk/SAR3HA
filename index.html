@@ -365,6 +365,18 @@ footer{text-align:center;color:#94a3b8;font-size:12px;padding:8px 0 35px}
 }
 .v5-dark .v10-section-label{background:#172554;color:#bfdbfe}
 
+
+/* ===== ترتيب الواجهة الجديد ===== */
+.site-group{margin:0 0 30px}
+.site-group-title{display:flex;align-items:center;gap:10px;margin:8px 2px 13px;padding:0 3px}
+.site-group-title>span{display:grid;place-items:center;width:38px;height:38px;border-radius:12px;background:#eff6ff;font-size:18px}
+.site-group-title strong{display:block;font-size:17px;color:var(--text)}
+.site-group-title small{display:block;color:var(--muted);font-size:11px;margin-top:1px}
+.site-group>.card{margin-bottom:14px}
+.site-group>.card:last-child{margin-bottom:0}
+@media(max-width:750px){.site-group{margin-bottom:24px}.site-group-title{margin-bottom:10px}.site-group-title strong{font-size:16px}}
+.v5-dark .site-group-title strong{color:#f8fafc}
+.v5-dark .site-group-title>span{background:#172554}
 </style>
 <style>
 
@@ -502,19 +514,19 @@ details.v6-fold[open] summary:after{content:"−"}
 
 <div class="container">
   <nav class="nav" aria-label="التنقل في سعّرها">
-    <button type="button" onclick="scrollToSection('calculator')">🧮 الحاسبة</button>
-    <button type="button" onclick="scrollToSection('result')">📌 النتيجة</button>
-    <button type="button" onclick="scrollToSection('merchantDashboard')">📊 لوحة التاجر</button>
-    <button type="button" onclick="scrollToSection('smartPricingSection')">🎯 تحليل السعر</button>
-    <button type="button" onclick="scrollToSection('multiProductSection')">🛒 المنتجات</button>
-    <button type="button" onclick="scrollToSection('historySection')">🕘 السجل</button>
-    <button type="button" onclick="scrollToSection('reportSection')">📄 التقارير</button>
-    <button type="button" onclick="scrollToSection('helpSection')">💡 كيف تعمل؟</button>
-    <button type="button" onclick="scrollToSection('faqSection')">❓ الأسئلة</button>
-  </nav>
+  <button type="button" onclick="scrollToSection('calculator')">🧮 الحسبة</button>
+  <button type="button" onclick="scrollToSection('merchantDashboard')">📊 التاجر</button>
+  <button type="button" onclick="scrollToSection('smartPricingSection')">🎯 تحليل السعر</button>
+  <button type="button" onclick="scrollToSection('advancedDiscountSection')">🏷️ الخصومات</button>
+  <button type="button" onclick="scrollToSection('multiProductSection')">🛒 المنتجات</button>
+  <button type="button" onclick="scrollToSection('historySection')">🕘 السجل</button>
+  <button type="button" onclick="scrollToSection('reportSection')">📄 التقارير</button>
+  <button type="button" onclick="scrollToSection('helpSection')">💡 المساعدة</button>
+</nav>
 </div>
 
-<main class="container"><section class="card" id="calculator">
+<main class="container"><div class="site-group"><div class="site-group-title"><span>🧮</span><div><strong>الحسبة والنتيجة</strong><small>قسم منظم من أدوات سعّرها</small></div></div>
+<section class="card" id="calculator">
   <h2 class="section-title">حاسبة السعر</h2>
 
   <div class="tabs">
@@ -788,7 +800,8 @@ details.v6-fold[open] summary:after{content:"−"}
   </div>
 
 </section>
-
+</div>
+<div class="site-group"><div class="site-group-title"><span>📊</span><div><strong>تحليل السعر والربحية</strong><small>قسم منظم من أدوات سعّرها</small></div></div>
 <section class="card v5-section" id="merchantDashboard">
   <h2 class="section-title">📊 لوحة التاجر</h2>
   <p class="v5-muted">ملخص سريع مبني على الحسبة الحالية والتوقعات التي تدخلها.</p>
@@ -915,7 +928,8 @@ details.v6-fold[open] summary:after{content:"−"}
   </div>
   <div class="v9-price-note" id="psychPricingNote">اختر السعر أو احسب المنتج أولًا لعرض المقارنة.</div>
 </section>
-
+</div>
+<div class="site-group"><div class="site-group-title"><span>🏷️</span><div><strong>الخصومات والأدوات الإضافية</strong><small>قسم منظم من أدوات سعّرها</small></div></div>
 <section class="card v5-section" id="advancedDiscountSection">
   <h2 class="section-title">🏷️ تحليل الخصم المتقدم</h2>
   <p class="v5-muted">شوف تأثير الخصم على سعر العميل والربح والهامش، وكم يجب أن ترفع السعر الأصلي حتى يبقى ربحك المستهدف كما هو.</p>
@@ -1005,7 +1019,8 @@ details.v6-fold[open] summary:after{content:"−"}
     <div id="priceHealthV4" class="note">احسب السعر لعرض تقييم الحسبة.</div>
   </div>
 </section>
-
+</div>
+<div class="site-group"><div class="site-group-title"><span>🛒</span><div><strong>المنتجات والحسابات المحفوظة</strong><small>قسم منظم من أدوات سعّرها</small></div></div>
 <section class="card v5-section" id="multiProductSection">
   <h2 class="section-title">🛒 حاسبة سلة المنتجات</h2>
   <p class="v5-muted">أضف عدة منتجات لمعرفة تكلفة السلة والربح الإجمالي عند بيعها كطلب واحد. الشحن والرسوم الثابتة من الحسبة الأساسية تُطبق على الطلب.</p>
@@ -1040,7 +1055,8 @@ details.v6-fold[open] summary:after{content:"−"}
     حذف سجل الحسبات
   </button>
 </section>
-
+</div>
+<div class="site-group"><div class="site-group-title"><span>📄</span><div><strong>التقارير والمساعدة</strong><small>قسم منظم من أدوات سعّرها</small></div></div>
 <section class="card v5-section" id="reportSection">
   <h2 class="section-title">📄 التقرير والمشاركة</h2>
   <div class="v5-toolbar">
@@ -1118,7 +1134,8 @@ details.v6-fold[open] summary:after{content:"−"}
     <div class="help-box"><h3>هل البيانات تخرج من جهازي؟</h3><p>النسخة الحالية تعتمد على JavaScript وlocalStorage في المتصفح ولا تحتاج خادمًا للحسابات الأساسية.</p></div>
   </div>
 </section>
-
+</div>
+<div class="site-group"><div class="site-group-title"><span>📚</span><div><strong>دليل التسعير</strong><small>قسم منظم من أدوات سعّرها</small></div></div>
 <section class="card v6-seo" id="seoGuide">
   <span class="v6-badge">دليل التسعير لأصحاب المتاجر</span>
   <h2>كيف تحدد سعر البيع المناسب لمنتجك؟</h2>
@@ -1144,7 +1161,8 @@ details.v6-fold[open] summary:after{content:"−"}
     <h3>هل السعر المقترح يعني أن السوق سيقبل السعر؟</h3>
     <p>لا. الحاسبة تحدد السعر من ناحية التكاليف والربحية. قبول السوق يحتاج مقارنة المنافسين والقيمة المقدمة والطلب.</p>
   </details>
-</section></main>
+</section>
+</div></main>
 
 <footer>
   سعّرها — حاسبة بسيطة وواضحة لأصحاب المتاجر.
