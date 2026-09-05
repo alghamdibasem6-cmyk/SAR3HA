@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://s3rhaa.shop/sitemap.xml
