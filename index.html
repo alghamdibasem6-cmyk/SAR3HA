@@ -1784,22 +1784,23 @@ function clearHistory(){
 }
 
 function resultText(){
-  if(!lastResult) return "";
+  const r = window.lastResult || lastResult;
+  if(!r) return "";
 
   return [
     "سعّرها",
-    "سعر البيع المقترح: "+money(lastResult.displayedPrice)+" ر.س",
-    "سعر البيع قبل الضريبة: "+money(lastResult.priceBeforeTax)+" ر.س",
-    "إجمالي التكلفة: "+money(lastResult.total)+" ر.س",
-    "رسوم الدفع: "+money(lastResult.payment)+" ر.س",
-    "الربح الصافي: "+money(lastResult.profit)+" ر.س",
-    "هامش الربح الفعلي: "+money(lastResult.actualMargin)+"%",
-    "نقطة التعادل: "+money(lastResult.breakEven)+" ر.س"
+    "سعر البيع المقترح: "+money(r.displayedPrice)+" ر.س",
+    "سعر البيع قبل الضريبة: "+money(r.priceBeforeTax)+" ر.س",
+    "إجمالي التكلفة: "+money(r.total)+" ر.س",
+    "رسوم الدفع: "+money(r.payment)+" ر.س",
+    "الربح الصافي: "+money(r.profit)+" ر.س",
+    "هامش الربح الفعلي: "+money(r.actualMargin)+"%",
+    "نقطة التعادل: "+money(r.breakEven)+" ر.س"
   ].join("\n");
 }
 
 async function copyResult(){
-  if(!lastResult){
+  if(!(window.lastResult)){
     showError("احسب سعر البيع أولًا.");
     return;
   }
@@ -1823,7 +1824,7 @@ function fallbackCopy(text){
 }
 
 async function shareResult(){
-  if(!lastResult){
+  if(!(window.lastResult)){
     showError("احسب سعر البيع أولًا.");
     return;
   }
